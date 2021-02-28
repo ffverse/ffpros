@@ -1,0 +1,27 @@
+Package: fpscrapr
+Title: Retrieves Data From FantasyPros.com
+Version: 0.0.0.1
+Authors@R: 
+    person(given = "Tan",
+           family = "Ho",
+           role = c("aut", "cre"),
+           email = "tan@tanho.ca")
+Description: Politely harvests data from FantasyPros.com
+License: MIT + file LICENSE
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    tidyr,
+    purrr,
+    stringr,
+    tibble,
+    rvest,
+    httr,
+    V8,
+    magrittr

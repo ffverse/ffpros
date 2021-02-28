@@ -1,0 +1,66 @@
+---
+title: "FantasyPros Requests"
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(stringr)
+library(tibble)
+library(rvest)
+library(httr)
+library(V8)
+```
+
+```{r}
+
+pkgs <- c('dplyr',
+'tidyr',
+'purrr',
+'stringr',
+'tibble',
+'rvest',
+'httr',
+'V8')
+
+purrr::map(pkgs,usethis::use_package)
+
+usethis::use_package(pkgs)
+
+```
+
+
+```{r}
+.extract_ecrdatascript <- function(script_nodes, extractor = "ecrData") {
+
+  x <- script_nodes %>%
+    purrr::map(as.character) %>%
+    stringr::str_detect(extractor)
+  
+  script_nodes[x]
+}
+```
+
+```{r}
+x <- httr::GET("https://www.fantasypros.com/nfl/rankings/consensus-cheatsheets.php") %>% 
+  httr::content() %>% 
+  rvest::html_nodes("script") %>% 
+  .extract_ecrdatascript() %>%
+  rvest::html_text()
+
+if (length(x)==0 || is.na(x)) {
+  stop()
+}
+
+js <- V8::v8()
+js$eval(x)
+
+ecr_data <- js$get('ecrData')
+
+df_ecr <- ecr_data$players %>% 
+  tibble::tibble() %>% 
+  tidyr::unnest_longer(1)
+
+```
