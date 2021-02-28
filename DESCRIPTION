@@ -25,3 +25,5 @@ Imports:
     httr,
     V8,
     magrittr
+URL: https://github.com/dynastyprocess/fpscrapr
+BugReports: https://github.com/dynastyprocess/fpscrapr/issues
