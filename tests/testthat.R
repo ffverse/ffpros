@@ -1,4 +1,4 @@
 library(testthat)
-library(fpscrapr)
+library(ffpros)
 
-test_check("fpscrapr")
+test_check("ffpros")

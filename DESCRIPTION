@@ -1,4 +1,4 @@
-Package: fpscrapr
+Package: ffpros
 Title: Retrieves Data From FantasyPros.com
 Version: 0.0.0.1
 Authors@R: 
@@ -6,7 +6,9 @@ Authors@R:
            family = "Ho",
            role = c("aut", "cre"),
            email = "tan@tanho.ca")
-Description: Politely harvests data from FantasyPros.com
+Description: Helps gather data from FantasyPros.com with rate-limiting/caching, 
+    forming appropriate calls, and returning tidy dataframes which can 
+    be easily connected to other data sources.
 License: MIT + file LICENSE
 Suggests: 
     testthat (>= 3.0.0)
@@ -25,5 +27,5 @@ Imports:
     httr,
     V8,
     magrittr
-URL: https://github.com/dynastyprocess/fpscrapr
-BugReports: https://github.com/dynastyprocess/fpscrapr/issues
+URL: https://github.com/dynastyprocess/ffpros
+BugReports: https://github.com/dynastyprocess/ffpros/issues

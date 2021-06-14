@@ -26,12 +26,13 @@
 #' @return rankings data from FantasyPros
 #'
 #' @export
-fp_rankings <- function(page, ..., sport = "nfl", .return = "table"){
+fp_rankings <- function(page,
+                        ...,
+                        sport = c("nfl","nba","nhl","mlb"),
+                        .return = c("table","metadata","all")){
 
-  # browser()
-
-  if(!.return %in% c("table","metadata","all")) {
-    stop('.return should be one of "table", "metadata", "all"!')}
+  .return <- match.arg(.return)
+  sport <- match.arg(sport)
 
   base_url <- glue::glue("https://www.fantasypros.com/{sport}/rankings/{page}.php")
 

@@ -19,15 +19,22 @@ options(tibble.print_min = 5,
 
 ```
 
-# fpscrapr
+# ffpros
 
 <!-- badges: start -->
 
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) [![CRAN status](https://www.r-pkg.org/badges/version/fpscrapr)](https://CRAN.R-project.org/package=fpscrapr)
+<!-- [![CRAN status](https://img.shields.io/cran/v/ffpros?style=flat-square&logo=R&label=CRAN)](https://CRAN.R-project.org/package=ffpros)  -->
+[![Dev status](https://img.shields.io/github/r-package/v/dynastyprocess/ffpros/main?label=dev%20version&style=flat-square&logo=github)](https://ffpros.dynastyprocess.com/)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html)
+[![R build status](https://img.shields.io/github/workflow/status/dynastyprocess/ffpros/R-CMD-check?label=R%20check&style=flat-square&logo=github)](https://github.com/DynastyProcess/ffpros/actions)
+[![Codecov test coverage](https://img.shields.io/codecov/c/github/dynastyprocess/ffpros?label=codecov&style=flat-square&logo=codecov)](https://codecov.io/gh/DynastyProcess/ffpros?branch=main)
+[![nflverse discord](https://img.shields.io/discord/591914197219016707.svg?color=5865F2&label=nflverse%20discord&logo=discord&logoColor=5865F2&style=flat-square)](https://discord.com/invite/5Er2FBnnQa)
 
 <!-- badges: end -->
 
 Helps scrape FantasyPros.com by handling rate-limiting/caching/parsing and returning tidy dataframes which can be easily connected to other data sources.
+
+_Renamed from ffpros to ffpros on 2021-06-14 so that all ffverse packages start with ff_
 
 ## Installation
 
@@ -36,18 +43,17 @@ Install the development version from GitHub with:
 ```{r eval = FALSE}
  
  # install.packages('remotes')
- 
- remotes::install_github("dynastyprocess/fpscrapr")
+ remotes::install_github("dynastyprocess/ffpros")
 ```
 
 ## Example
 
-All `fpscrapr` functions start with fp.
+All `ffpros` functions start with fp.
 
 The fp_rankings function retrieves fantasy ranks from fantasypros.com and right now is only tested with NFL.
 
 ```{r example}
-library(fpscrapr)
+library(ffpros)
 
 fp_rankings(page = "consensus-cheatsheets", sport = "nfl")
 

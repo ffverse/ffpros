@@ -1,14 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# fpscrapr
+# ffpros
 
 <!-- badges: start -->
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/fpscrapr)](https://CRAN.R-project.org/package=fpscrapr)
+status](https://www.r-pkg.org/badges/version/ffpros)](https://CRAN.R-project.org/package=ffpros)
 
 <!-- badges: end -->
 
@@ -24,18 +24,18 @@ Install the development version from GitHub with:
  
  # install.packages('remotes')
  
- remotes::install_github("dynastyprocess/fpscrapr")
+ remotes::install_github("dynastyprocess/ffpros")
 ```
 
 ## Example
 
-All `fpscrapr` functions start with fp.
+All `ffpros` functions start with fp.
 
 The fp\_rankings function retrieves fantasy ranks from fantasypros.com
 and right now is only tested with NFL.
 
 ``` r
-library(fpscrapr)
+library(ffpros)
 
 fp_rankings(page = "consensus-cheatsheets", sport = "nfl")
 #> # A tibble: 459 x 27
