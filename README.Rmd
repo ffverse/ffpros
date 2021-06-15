@@ -60,3 +60,10 @@ fp_rankings(page = "consensus-cheatsheets", sport = "nfl")
 fp_rankings(page = "ros-overall", sport = "nhl")
 
 ```
+
+## Options
+
+```{r eval = FALSE}
+☺
+```
+
