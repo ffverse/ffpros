@@ -1,0 +1,54 @@
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+name: pkgdown
+
+jobs:
+  pkgdown:
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v1
+
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Install pak and query dependencies
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          saveRDS(pak::pkg_deps("local::.", dependencies = TRUE), ".github/r-depends.rds")
+        shell: Rscript {0}
+
+      - name: Restore R package cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.R_LIBS_USER }}/*
+            !${{ env.R_LIBS_USER }}/pak
+          key: ffpros-${{ hashFiles('DESCRIPTION') }}-${{ hashFiles('.github/r-depends.rds') }}
+          restore-keys: |
+            ffpros-${{ hashFiles('DESCRIPTION') }}
+            ffpros-
+
+      - name: Install system dependencies
+        run: |
+          pak::local_system_requirements(execute = TRUE)
+        shell: Rscript {0}
+
+      - name: Install packages
+        run: |
+          pak::pak("pkgdown")
+          pak::local_install()
+        shell: Rscript {0}
+
+      - name: Deploy package
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'

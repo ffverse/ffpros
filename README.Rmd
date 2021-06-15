@@ -19,7 +19,7 @@ options(tibble.print_min = 5,
 
 ```
 
-# ffpros
+# ffpros <a href='#'><img src="man/figures/logo.png" align="right" width="25%" min-width="120px"/></a>
 
 <!-- badges: start -->
 
@@ -34,36 +34,36 @@ options(tibble.print_min = 5,
 
 Helps scrape FantasyPros.com by handling rate-limiting/caching/parsing and returning tidy dataframes which can be easily connected to other data sources.
 
-_Renamed from ffpros to ffpros on 2021-06-14 so that all ffverse packages start with ff_
+_Renamed from fpscrapr to ffpros on 2021-06-14 so that all ffverse packages start with ff_
 
 ## Installation
 
 Install the development version from GitHub with:
 
 ```{r eval = FALSE}
- 
  # install.packages('remotes')
  remotes::install_github("dynastyprocess/ffpros")
 ```
 
 ## Example
 
-All `ffpros` functions start with fp.
+All `ffpros` functions start with fp_.
 
 The fp_rankings function retrieves fantasy ranks from fantasypros.com and right now is only tested with NFL.
 
 ```{r example}
 library(ffpros)
 
-fp_rankings(page = "consensus-cheatsheets", sport = "nfl")
+fp_rankings(page = "consensus-cheatsheets") # defaults to nfl!
 
-fp_rankings(page = "ros-overall", sport = "nhl")
-
+# fp_rankings(page = "ros-overall", sport = "nhl")
 ```
 
-## Options
+## Options (and defaults)
 
 ```{r eval = FALSE}
-☺
+options(ffpros.cache = "memory") # one of "memory", "filesystem", or "off"
+options(ffpros.sport = "nfl") # one of "nfl", "nba", "nhl", "mlb"
+options(ffpros.include_metadata = FALSE) # TRUE to return a list including associated metadata
 ```
 
