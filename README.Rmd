@@ -15,8 +15,21 @@ options(tibble.print_min = 5,
         pillar.bold = TRUE, 
         pillar.min_chars = 25, 
         pillar.min_title_chars = 25,
-        dplyr.summarise.inform = FALSE)
+        dplyr.summarise.inform = FALSE,
+        rmarkdown.html_vignette.check_title = FALSE)
 
+eval <- TRUE
+
+tryCatch(expr = {
+  
+  download.file("https://github.com/dynastyprocess/ffpros-tests/archive/main.zip","f.zip")
+  unzip('f.zip', exdir = ".")
+  
+  httptest::.mockPaths(new = "ffpros-tests-main")},
+  warning = function(e) eval <<- FALSE,
+  error = function(e) eval <<- FALSE)
+
+httptest::use_mock_api()
 ```
 
 # ffpros <a href='#'><img src="man/figures/logo.png" align="right" width="25%" min-width="120px"/></a>
@@ -38,34 +51,74 @@ _Renamed from fpscrapr to ffpros on 2021-06-14 so that all ffverse packages star
 
 ## Installation
 
-Install the development version from GitHub with:
+Install the stable version of this package from the [ffverse r-universe repository](https://ffverse.r-universe.dev):
 
 ```{r eval = FALSE}
- # install.packages('remotes')
- remotes::install_github("dynastyprocess/ffpros")
+install.packages("ffpros", repos = "https://ffverse.r-universe.dev")
 ```
 
-## Example
+Install the development version with either [DynastyProcess's r-universe](https://dynastyprocess.r-universe.dev) or remotes + GitHub:
 
-All `ffpros` functions start with fp_.
+```{r eval = FALSE}
+# ffverse's r-universe
+install.packages("ffpros", repos = "https://dynastyprocess.r-universe.dev")
 
-The fp_rankings function retrieves fantasy ranks from fantasypros.com and right now is only tested with NFL.
+# or via GitHub c/o remotes/devtools: # install.packages('remotes')
+remotes::install_github("dynastyprocess/ffpros")
+```
+
+## Usage
+
+All `ffpros` functions start with fp_ for ease of autocomplete.
+
+The fp_rankings function retrieves fantasy ranks from FantasyPros.com.
 
 ```{r example}
 library(ffpros)
 
 fp_rankings(page = "consensus-cheatsheets") # defaults to nfl!
 
-# fp_rankings(page = "ros-overall", sport = "nhl")
+fp_rankings(page = "ros-overall", sport = "nhl")
 ```
 
-## Options (and defaults)
+## Default Options
 
-ffpros uses the following 
+ffpros uses the following options to help configure default arguments:
 
 ```{r eval = FALSE}
-options(ffpros.cache = "memory") # one of "memory", "filesystem", or "off"
+options(ffpros.cache = "memory") # one of "memory", "filesystem", or "off", must be set *prior* to loading the package
 options(ffpros.sport = "nfl") # one of "nfl", "nba", "nhl", "mlb"
 options(ffpros.include_metadata = FALSE) # TRUE to return a list including associated metadata
+```
+
+There are also helper functions prefixed with `fp_set_` that help administer these options.
+
+
+## Support
+
+The best places to get help on this package are:
+
+- the [nflverse discord](https://discord.com/invite/5Er2FBnnQa) (for both this package as well as anything R/NFL related)
+- opening [an issue](https://github.com/DynastyProcess/ffpros/issues/new/choose)
+
+## Contributing
+
+Many hands make light work! Here are some ways you can contribute to this project:
+
+-   You can [open an issue](https://github.com/DynastyProcess/ffpros/issues/new/choose) if you'd like to request specific data or report a bug/error.
+
+-   You can [sponsor this project with donations](https://github.com/sponsors/tanho63)!
+
+-   If you'd like to contribute code, please check out [the contribution guidelines](https://ffpros.dynastyprocess.com/CONTRIBUTING.html).
+
+## Terms of Use
+
+The R code for this package is released as open source under the [MIT license](https://ffpros.dynastyprocess.com/LICENSE.html).
+
+The data accessed by this package belongs to FantasyPros.com, and is governed by their terms of use.
+
+```{r include = FALSE}
+httptest::stop_mocking()
+unlink(c("ffpros-tests-main","f.zip"), recursive = TRUE, force = TRUE)
 ```
 

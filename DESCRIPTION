@@ -1,6 +1,6 @@
 Package: ffpros
-Title: Retrieves Data From FantasyPros.com
-Version: 0.1.0.01
+Title: Retrieves Data from FantasyPros
+Version: 0.1.0.02
 Authors@R: 
     person(given = "Tan",
            family = "Ho",
@@ -31,10 +31,11 @@ Imports:
     tidyr (>= 1.1.0),
     V8 (>= 3.4.0)
 Suggests: 
+    curl (>= 4.0.0),
+    withr (>= 2.4.0),
     testthat (>= 3.0.0),
     httptest (>= 4.0.0)
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Config/testthat/edition: 3

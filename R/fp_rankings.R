@@ -35,7 +35,7 @@ fp_rankings <- function(page,
   stopifnot(is.logical(include_metadata))
 
   url_query <- glue::glue("https://www.fantasypros.com/{sport}/rankings/{page}.php") %>%
-    httr::modify_url(query = ...)
+    httr::modify_url(query = list(...))
 
   response <- .fp_get(url_query, sport)
 
@@ -268,5 +268,5 @@ fp_rankings_parse.fp_mlb <- function(response){
       "adp" = "ADP"
     )))
 
-  return(ecr = ecr, response = response$response)
+  return(list(ecr = ecr, response = response$response))
 }
