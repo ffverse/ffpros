@@ -1,3 +1,12 @@
+#### UTILS ####
+# External functions imported and sometimes re-exported
+
+#' @keywords internal
+#' @importFrom rlang .data `%||%` .env
+#' @importFrom utils str tail
+
+NULL
+
 #' Pipe operator
 #'
 #' See \code{magrittr::\link[magrittr:pipe]{\%>\%}} for details.
@@ -20,3 +29,4 @@ NULL
 .retry_get <- function(...) {
   httr::RETRY("GET", ...)
 }
+

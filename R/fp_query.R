@@ -1,7 +1,7 @@
 #' FP GET
 #'
-#' @url_query fully formed URL
-#' @sport sport
+#' @param url_query fully formed URL
+#' @param sport sport
 #'
 #' @keywords internal
 .fp_get <- function(url_query, sport){
@@ -36,7 +36,7 @@
 #' @export
 print.fp_response <- function(x, ...){
 
-  cat("<FP query - ", httr::http_status(x$response)$message,">\n", sep = "")
+  cat("FP query <", httr::http_status(x$response)$message,">\n", sep = "")
   cat("URL: <",x$query,">\n", sep = "")
 
   str(x$content, max.level = 1)

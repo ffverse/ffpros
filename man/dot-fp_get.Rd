@@ -6,6 +6,11 @@
 \usage{
 .fp_get(url_query, sport)
 }
+\arguments{
+\item{url_query}{fully formed URL}
+
+\item{sport}{sport}
+}
 \description{
 FP GET
 }

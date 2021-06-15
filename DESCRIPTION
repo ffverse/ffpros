@@ -1,6 +1,6 @@
 Package: ffpros
 Title: Retrieves Data From FantasyPros.com
-Version: 0.1.0.0001
+Version: 0.1.0.01
 Authors@R: 
     person(given = "Tan",
            family = "Ho",
@@ -10,24 +10,29 @@ Description: Helps gather data from FantasyPros.com with
     rate-limiting/caching, forming appropriate calls, and returning tidy
     dataframes which can be easily connected to other data sources.
 License: MIT + file LICENSE
-URL: https://github.com/dynastyprocess/ffpros
+URL: https://ffpros.dynastyprocess.com, https://github.com/dynastyprocess/ffpros
 BugReports: https://github.com/dynastyprocess/ffpros/issues
 Depends: 
     R (>= 4.0.0)
 Imports: 
+    cachem (>= 1.0.0),
+    checkmate (>= 2.0.0),
     dplyr (>= 1.0.0),
+    glue (>= 1.4.0),
     httr (>= 1.4.0),
     magrittr (>= 2.0.0),
     memoise (>= 2.0.0),
     purrr (>= 0.3.0),
     ratelimitr (>= 0.4.0),
+    rlang (>= 0.4.0),
     rvest (>= 1.0.0),
     stringr (>= 1.4.0),
     tibble (>= 3.1.0),
     tidyr (>= 1.1.0),
     V8 (>= 3.4.0)
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    httptest (>= 4.0.0)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

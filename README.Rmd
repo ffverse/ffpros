@@ -61,6 +61,8 @@ fp_rankings(page = "consensus-cheatsheets") # defaults to nfl!
 
 ## Options (and defaults)
 
+ffpros uses the following 
+
 ```{r eval = FALSE}
 options(ffpros.cache = "memory") # one of "memory", "filesystem", or "off"
 options(ffpros.sport = "nfl") # one of "nfl", "nba", "nhl", "mlb"

@@ -17,20 +17,21 @@
     memoise_option <- "memory"
   }
 
-  if (memoise_option == "filesystem") cache <- cachem::cache_disk(dir = cache_dir)
+  if (memoise_option == "filesystem") {
+    cache <- cachem::cache_disk(dir = tools::R_user_dir("ffpros", which = "cache"))
+  }
 
   if (memoise_option == "memory") cache <- cachem::cache_mem()
 
   if (memoise_option != "off") {
-    # XYZ
+    .fp_get <<-memoise::memoise(.fp_get, ~memoise::timeout(3600), cache = cache)
   }
 
-  if (memoise_option == "off") packageStartupMessage('Note: ffpros.cache is set to "off"')
-
-
-  user_agent <-  glue::glue("ffpros/{utils::packageVersion('ffpros')} ",
-                            "API client package ",
-                            "https://github.com/dynastyprocess/ffpros") %>%
+  user_agent <-
+    glue::glue(
+      "ffpros/{utils::packageVersion('ffpros')} ",
+      "API client package ",
+      "https://github.com/dynastyprocess/ffpros") %>%
     httr::user_agent()
 
   # https://www.fantasypros.com/robots.txt
@@ -41,4 +42,12 @@
   assign("get", get, envir = .ffpros_env)
 
   # nocov end
+}
+
+.onAttach <- function(libname, pkgname){
+
+  memoise_option <- getOption("ffpros.cache")
+
+  if(!is.null(memoise_option) && memoise_option == "off")
+    packageStartupMessage('Note: ffpros.cache is set to "off"')
 }
