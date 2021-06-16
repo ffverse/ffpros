@@ -61,33 +61,35 @@ fp_rankings_parse.fp_nfl <- function(response){
 
   if(length(ecr_js)==0) stop("Unable to parse page for JSON ecr data.")
 
-    ecr_data <- .fp_string_to_json(string = ecr_js, extractor = "ecrData")
+  ecr_data <- .fp_string_to_json(string = ecr_js, extractor = "ecrData")
 
-    players <- ecr_data$players %>%
-      tibble::tibble() %>%
-      tidyr::unnest_longer(1) %>%
-      dplyr::select(
-        dplyr::any_of(c(
-          "fantasypros_id"="player_id",
-          "sportradar_id"="sportsdata_id",
-          "player_name",
-          "pos"="player_position_id",
-          "team"="player_team_id",
-          "age" = "player_age",
-          "rank" = "rank_ecr",
-          "ecr" = "rank_ave",
-          "sd" = "rank_std",
-          "best" = "rank_min",
-          "worst" = "rank_max",
-          "yahoo_id" = "player_yahoo_id",
-          "cbs_id" = "cbs_player_id"
-        )),
-        dplyr::everything()
-      )
+  players <- ecr_data$players %>%
+    tibble::tibble() %>%
+    tidyr::unnest_longer(1) %>%
+    dplyr::select(
+      dplyr::any_of(c(
+        "fantasypros_id"="player_id",
+        "player_name",
+        "pos"="player_position_id",
+        "team"="player_team_id",
+        "age" = "player_age",
+        "rank" = "rank_ecr",
+        "ecr" = "rank_ave",
+        "sd" = "rank_std",
+        "best" = "rank_min",
+        "worst" = "rank_max",
+        "sportradar_id"="sportsdata_id",
+        "yahoo_id" = "player_yahoo_id",
+        "cbs_id" = "cbs_player_id"
+      )),
+      dplyr::everything()
+    ) %>%
+    dplyr::mutate_at(c("ecr","best","worst","rank","sd"), as.numeric) %>%
+    dplyr::mutate_at("fantasypros_id", as.character)
 
-    metadata <- ecr_data[names(ecr_data)!="players"]
+  metadata <- ecr_data[names(ecr_data)!="players"]
 
-    return(list(ecr = players, metadata = metadata, response = response$response))
+  return(list(ecr = players, metadata = metadata, response = response$response))
 }
 
 #' NHL method for fp_rankings
@@ -133,16 +135,19 @@ fp_rankings_parse.fp_nhl <- function(response){
     rvest::html_table() %>%
     purrr::pluck(1) %>%
     dplyr::bind_cols(player_teams) %>%
-    dplyr::select(
+    dplyr::select(dplyr::any_of(c(
+      "fantasypros_id"="player_id",
       "player_name",
-      "player_id",
       "team",
       "pos",
+      "rank" = "Rank",
       "ecr" = "Avg",
       "sd" = "Std Dev",
       "best" = "Best",
       "worst" = "Worst"
-    )
+    ))) %>%
+    dplyr::mutate_at(c("ecr","best","worst","rank","sd"), as.numeric) %>%
+    dplyr::mutate_at("fantasypros_id", as.character)
 
   return(list(ecr = clean_ecr, response = response$response))
 }
@@ -200,7 +205,9 @@ fp_rankings_parse.fp_nba <- function(response){
       "sd" = "Std Dev",
       "best" = "Best",
       "worst" = "Worst"
-    )))
+    )))%>%
+    dplyr::mutate_at(c("ecr","best","worst","rank","sd"), as.numeric) %>%
+    dplyr::mutate_at("fantasypros_id", as.character)
 
   return(list(ecr = clean_ecr, response = response$response))
 }
@@ -266,7 +273,9 @@ fp_rankings_parse.fp_mlb <- function(response){
       "best" = "Best",
       "worst" = "Worst",
       "adp" = "ADP"
-    )))
+    ))) %>%
+    dplyr::mutate_at(c("ecr","best","worst","rank","sd","adp"), as.numeric) %>%
+    dplyr::mutate_at("fantasypros_id", as.character)
 
   return(list(ecr = ecr, response = response$response))
 }

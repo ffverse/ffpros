@@ -34,6 +34,7 @@ fp_set_ratelimit <- function(rate_number = 1, rate_seconds = 5, rate_limit = TRU
             is.logical(rate_limit)
   )
 
+
   if (rate_limit) fn_get <- ratelimitr::limit_rate(.retry_get, ratelimitr::rate(rate_number, rate_seconds))
 
   if (!rate_limit) fn_get <- .retry_get
@@ -53,10 +54,11 @@ fp_set_ratelimit <- function(rate_number = 1, rate_seconds = 5, rate_limit = TRU
 #' @export
 fp_set_sport <- function(sport) {
 
-  stopifnot(length(sport)==1,
-            is.character(sport),
-            sport %in% c("nfl", "nba", "nhl", "mlb")
-            )
+  stopifnot(
+    length(sport)==1,
+    is.character(sport),
+    sport %in% c("nfl", "nba", "nhl", "mlb")
+  )
 
   options(ffpros.sport = sport)
 
@@ -66,7 +68,7 @@ fp_set_sport <- function(sport) {
 #' Set whether metadata is returned
 #'
 #' This option allows you to configure whether the output of functions includes metadata,
-#' or is simplified to only the dataframe. Defaults to simplifying.
+#' or is simplified to only the dataframe. Defaults to simplifying (i.e. include = FALSE)
 #'
 #' @param include logical
 #'

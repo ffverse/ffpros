@@ -74,7 +74,7 @@ All `ffpros` functions start with fp_ for ease of autocomplete.
 
 The fp_rankings function retrieves fantasy ranks from FantasyPros.com.
 
-```{r example}
+```{r example, message = FALSE}
 library(ffpros)
 
 fp_rankings(page = "consensus-cheatsheets") # defaults to nfl!
@@ -93,7 +93,6 @@ options(ffpros.include_metadata = FALSE) # TRUE to return a list including assoc
 ```
 
 There are also helper functions prefixed with `fp_set_` that help administer these options.
-
 
 ## Support
 
