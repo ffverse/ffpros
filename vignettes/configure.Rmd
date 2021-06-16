@@ -1,0 +1,21 @@
+---
+title: "Configure"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+author: Tan Ho
+vignette: >
+  %\VignetteIndexEntry{Configure}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, eval = FALSE}
+# library(ffpros)
+```

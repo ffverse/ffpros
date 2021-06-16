@@ -1,0 +1,22 @@
+---
+title: "ffpros"
+output: rmarkdown::html_vignette
+author: Tan Ho
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{ffpros}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ffscrapr)
+library(ffpros)
+```

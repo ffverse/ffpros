@@ -2,6 +2,19 @@ destination: docs
 
 url: ffpros.dynastyprocess.com
 
+reference:
+- title: Main
+  desc: These are the primary functions of `ffpros`.
+  contents:
+  - "fp_rankings"
+- title: Configure
+  desc: Functions for configuring default `ffpros` behaviour.
+  contents:
+  - starts_with("fp_set")
+- title: Misc
+  contents:
+  - "`%>%`"
+
 authors:
   Tan Ho:
     href: https://twitter.com/_TanHo
@@ -54,5 +67,5 @@ template:
       site: "@DynastyProcess"
       card: summary
 
-#development:
-#  mode: auto
+development:
+ mode: auto
