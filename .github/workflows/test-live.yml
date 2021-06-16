@@ -1,0 +1,54 @@
+on:
+  schedule:
+    - cron: 3 6 * * 5
+  workflow_dispatch:
+
+
+name: TestLiveSite
+
+jobs:
+  test-live-site:
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      MOCK_BYPASS: true
+      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v1
+
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Install pak and query dependencies
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          saveRDS(pak::pkg_deps("local::.", dependencies = TRUE), ".github/r-depends.rds")
+        shell: Rscript {0}
+
+      - name: Restore R package cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.R_LIBS_USER }}/*
+            !${{ env.R_LIBS_USER }}/pak
+          key: ffpros-${{ hashFiles('DESCRIPTION') }}-${{ hashFiles('.github/r-depends.rds') }}
+          restore-keys: |
+            ffpros-${{ hashFiles('DESCRIPTION') }}
+            ffpros-
+
+      - name: Install system dependencies
+        run: |
+          pak::local_system_requirements(execute = TRUE)
+        shell: Rscript {0}
+
+      - name: Install dependencies
+        run: |
+          pak::local_install_dev_deps()
+        shell: Rscript {0}
+
+      - name: Run Tests
+        run: |
+          print(Sys.getenv("MOCK_BYPASS"))
+          testthat::test_local()
+        shell: Rscript {0}

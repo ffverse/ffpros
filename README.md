@@ -12,6 +12,8 @@ status](https://img.shields.io/github/r-package/v/dynastyprocess/ffpros/main?lab
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html)
 [![R build
 status](https://img.shields.io/github/workflow/status/dynastyprocess/ffpros/R-CMD-check?label=R%20check&style=flat-square&logo=github)](https://github.com/DynastyProcess/ffpros/actions)
+[![Live test
+status](https://img.shields.io/github/workflow/status/dynastyprocess/ffpros/TestLiveSite?label=Live%20check&style=flat-square&logo=github)](https://github.com/DynastyProcess/ffpros/actions)
 [![Codecov test
 coverage](https://img.shields.io/codecov/c/github/dynastyprocess/ffpros?label=codecov&style=flat-square&logo=codecov)](https://codecov.io/gh/DynastyProcess/ffpros?branch=main)
 [![nflverse
@@ -66,8 +68,8 @@ fp_rankings(page = "consensus-cheatsheets") # defaults to nfl!
 #> 4          17240 9811b753-347c-467a-b3cb-~ Saquon Barkley      RB    NYG       4
 #> 5          17246 4bd60b33-9fbf-4156-ba2b-~ Nick Chubb          RB    CLE       5
 #> # ... with 490 more rows, and 21 more variables: ecr <chr>, sd <chr>,
-#> #   min <chr>, max <chr>, yahoo_id <chr>, cbs_id <chr>, player_positions <chr>,
-#> #   player_short_name <chr>, player_eligibility <chr>,
+#> #   best <chr>, worst <chr>, yahoo_id <chr>, cbs_id <chr>,
+#> #   player_positions <chr>, player_short_name <chr>, player_eligibility <chr>,
 #> #   player_yahoo_positions <chr>, player_page_url <chr>, player_filename <chr>,
 #> #   player_square_image_url <chr>, player_image_url <chr>,
 #> #   player_bye_week <chr>, player_owned_avg <dbl>, player_owned_espn <dbl>,
@@ -76,7 +78,15 @@ fp_rankings(page = "consensus-cheatsheets") # defaults to nfl!
 
 fp_rankings(page = "ros-overall", sport = "nhl")
 #> No encoding supplied: defaulting to UTF-8.
-#> NULL
+#> # A tibble: 420 x 8
+#>   player_name     player_id team  pos     ecr    sd  best worst
+#>   <chr>           <chr>     <chr> <chr> <dbl> <dbl> <int> <int>
+#> 1 Connor McDavid  16664     EDM   C,F     1.5   0.5     1     2
+#> 2 Auston Matthews 17201     TOR   C,F     2.5   1.5     1     4
+#> 3 Mitchell Marner 16669     TOR   RW,F    8.5   5.5     3    14
+#> 4 Leon Draisaitl  16588     EDM   C,LW   10     7       3    17
+#> 5 Patrick Kane    15373     CHI   RW,F   12     1      11    13
+#> # ... with 415 more rows
 ```
 
 ## Default Options
