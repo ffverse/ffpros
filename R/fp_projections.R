@@ -76,8 +76,10 @@ fp_projections_parse.fp_nfl <- function(response){
       team = purrr::map2(.data$player_name,
                          .data$team,
                          ~stringr::str_remove_all(.y,.x) %>%
+                           stringr::str_extract_all("[A-Z]+ ") %>%
                            stringr::str_squish()) %>% unlist()
     )
+
 
   projections <- rvest::html_table(table_html)
 
@@ -87,10 +89,81 @@ fp_projections_parse.fp_nfl <- function(response){
     apply(2,paste, collapse = "_") %>%
     janitor::make_clean_names()
 
-  table_out <- projections %>%
-    tail(-2) %>%
-    setNames(table_names) %>%
-    dplyr::bind_cols(player_info) %>%
+  #### Base Case ####
+
+  if(stringr::str_detect(response$query, "max\\-yes", negate = TRUE) ||
+     stringr::str_detect(response$query, "min\\-yes", negate =  TRUE)){
+
+    table_out <- projections %>%
+      tail(-2) %>%
+      setNames(table_names) %>%
+      dplyr::bind_cols(player_info) %>%
+      dplyr::mutate(
+        dplyr::across(dplyr::matches("passing_|rushing_|receiving_|misc_"),
+                      ~ stringr::str_remove(.x,",") %>% as.numeric())
+      ) %>%
+      dplyr::select(
+        "fantasypros_id",
+        "player_name",
+        "team",
+        dplyr::starts_with("passing_"),
+        dplyr::starts_with("rushing_"),
+        dplyr::starts_with("receiving_"),
+        dplyr::starts_with("misc_")
+      )
+
+    return(list(projections = table_out, response = response$response))
+  }
+
+  ## IF min and max projections are displayed
+
+  max_cells <- NULL
+
+  if(stringr::str_detect(response$query, "max\\-yes\\=true")) {
+
+    max_cells <- table_html %>%
+      rvest::html_nodes(".max-cell") %>%
+      rvest::html_text() %>%
+      matrix(nrow = nrow(player_info),
+             byrow = TRUE,
+             dimnames = list(seq_len(nrow(player_info)),
+                             paste(table_names,"max",sep="_"))
+      ) %>%
+      tibble::as_tibble() %>%
+      dplyr::select(-"player_max")
+
+  }
+
+  min_cells <- NULL
+
+  if(stringr::str_detect(response$query, "min\\-yes\\=true")) {
+
+    min_cells <- table_html %>%
+      rvest::html_nodes(".min-cell") %>%
+      rvest::html_text() %>%
+      matrix(nrow = nrow(player_info),
+             byrow = TRUE,
+             dimnames = list(1:nrow(player_info),
+                             paste(table_names,"min",sep="_"))
+      ) %>%
+      tibble::as_tibble() %>%
+      dplyr::select(-"player_min")
+
+  }
+
+
+  mean_cells <- table_html %>%
+    rvest::html_nodes(".center") %>%
+    xml2::as_list() %>%
+    purrr::map_chr(purrr::pluck(1)) %>%
+    matrix(nrow = nrow(player_info),
+           byrow = TRUE,
+           dimnames = list(1:nrow(player_info),
+                           paste(table_names,"mean",sep="_")[-1])
+    ) %>%
+    tibble::as_tibble()
+
+  table_out <- dplyr::bind_cols(player_info,mean_cells,max_cells,min_cells) %>%
     dplyr::mutate(
       dplyr::across(dplyr::matches("passing_|rushing_|receiving_|misc_"),
                     ~ stringr::str_remove(.x,",") %>% as.numeric())
@@ -105,6 +178,6 @@ fp_projections_parse.fp_nfl <- function(response){
       dplyr::starts_with("misc_")
     )
 
-  return(list(projections = table_out, response = response$response))
+    return(list(projections = table_out, response = response$response))
 }
 
