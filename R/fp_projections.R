@@ -13,7 +13,7 @@
 #' @examples
 #' \donttest{
 #' fp_projections("qb")
-#' fp_projections("wr",year=2020,week=2)
+#' fp_projections("wr", year=2020, week=2)
 #' }
 #'
 #' @export
