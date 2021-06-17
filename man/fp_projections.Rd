@@ -20,8 +20,11 @@ Scrapes FantasyPros ranks from the specified page (and optionally, returns metad
 }
 \examples{
 \donttest{
+if(interactive()){
 fp_projections("qb")
-fp_projections("wr", year=2020, week=2)
+fp_projections("wr", year = 2016, week = 2, scoring = "PPR")
+fp_projections("flex", year = 2020, week = 7, scoring = "PPR", `min-yes`="true", `max-yes`="true")
+}
 }
 
 }

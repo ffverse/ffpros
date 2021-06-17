@@ -12,8 +12,11 @@
 #'
 #' @examples
 #' \donttest{
+#' if(interactive()){
 #' fp_projections("qb")
-#' fp_projections("wr", year=2020, week=2)
+#' fp_projections("wr", year = 2016, week = 2, scoring = "PPR")
+#' fp_projections("flex", year = 2020, week = 7, scoring = "PPR", `min-yes`="true", `max-yes`="true")
+#' }
 #' }
 #'
 #' @export
@@ -105,6 +108,7 @@ fp_projections_parse.fp_nfl <- function(response){
       dplyr::select(
         "fantasypros_id",
         "player_name",
+        dplyr::starts_with("pos"),
         "team",
         dplyr::starts_with("passing_"),
         dplyr::starts_with("rushing_"),
@@ -115,11 +119,13 @@ fp_projections_parse.fp_nfl <- function(response){
     return(list(projections = table_out, response = response$response))
   }
 
-  ## IF min and max projections are displayed
+  ## If min and max projections are displayed, do this
 
   max_cells <- NULL
 
   if(stringr::str_detect(response$query, "max\\-yes\\=true")) {
+
+    max_names <- paste(table_names,"max",sep="_")
 
     max_cells <- table_html %>%
       rvest::html_nodes(".max-cell") %>%
@@ -127,7 +133,7 @@ fp_projections_parse.fp_nfl <- function(response){
       matrix(nrow = nrow(player_info),
              byrow = TRUE,
              dimnames = list(seq_len(nrow(player_info)),
-                             paste(table_names,"max",sep="_"))
+                             max_names[max_names!="pos_max"])
       ) %>%
       tibble::as_tibble() %>%
       dplyr::select(-"player_max")
@@ -138,19 +144,22 @@ fp_projections_parse.fp_nfl <- function(response){
 
   if(stringr::str_detect(response$query, "min\\-yes\\=true")) {
 
+    min_names <- paste(table_names,"min",sep="_")
+
     min_cells <- table_html %>%
       rvest::html_nodes(".min-cell") %>%
       rvest::html_text() %>%
       matrix(nrow = nrow(player_info),
              byrow = TRUE,
              dimnames = list(1:nrow(player_info),
-                             paste(table_names,"min",sep="_"))
+                             min_names[min_names!="pos_min"])
       ) %>%
       tibble::as_tibble() %>%
       dplyr::select(-"player_min")
 
   }
 
+  mean_names <- paste(table_names,"mean",sep="_")
 
   mean_cells <- table_html %>%
     rvest::html_nodes(".center") %>%
@@ -159,9 +168,17 @@ fp_projections_parse.fp_nfl <- function(response){
     matrix(nrow = nrow(player_info),
            byrow = TRUE,
            dimnames = list(1:nrow(player_info),
-                           paste(table_names,"mean",sep="_")[-1])
+                           mean_names[!mean_names %in% c("player_mean", "pos_mean")])
     ) %>%
     tibble::as_tibble()
+
+  if(stringr::str_detect(response$query, "flex")) {
+
+    player_info$pos <- table_html %>%
+      rvest::html_nodes("tr td:nth-child(2)") %>%
+      rvest::html_text() %>%
+      tail(-1)
+  }
 
   table_out <- dplyr::bind_cols(player_info,mean_cells,max_cells,min_cells) %>%
     dplyr::mutate(
@@ -171,6 +188,7 @@ fp_projections_parse.fp_nfl <- function(response){
     dplyr::select(
       "fantasypros_id",
       "player_name",
+      dplyr::starts_with("pos"),
       "team",
       dplyr::starts_with("passing_"),
       dplyr::starts_with("rushing_"),
@@ -178,6 +196,6 @@ fp_projections_parse.fp_nfl <- function(response){
       dplyr::starts_with("misc_")
     )
 
-    return(list(projections = table_out, response = response$response))
+  return(list(projections = table_out, response = response$response))
 }
 
