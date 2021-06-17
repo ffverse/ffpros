@@ -2,6 +2,7 @@
 
 S3method(print,fp_response)
 export("%>%")
+export(fp_projections)
 export(fp_rankings)
 export(fp_set_metadata)
 export(fp_set_ratelimit)

@@ -20,6 +20,8 @@ if (download_mock) {
 
       httptest::.mockPaths(new = "ffpros-tests-main")
 
+      fp_set_ratelimit(rate_limit = FALSE)
+
       withr::defer(
         unlink(c("ffpros-tests-main", "f.zip"), recursive = TRUE, force = TRUE),
         testthat::teardown_env()
