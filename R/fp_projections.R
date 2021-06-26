@@ -199,3 +199,25 @@ fp_projections_parse.fp_nfl <- function(response){
   return(list(projections = table_out, response = response$response))
 }
 
+#' MLB method for fp_rankings
+#' @describeIn fp_rankings_parse
+#'
+#' @keywords internal
+fp_projections_parse.fp_mlb <- function(response){
+
+}
+#' NHL method for fp_rankings
+#' @describeIn fp_rankings_parse
+#'
+#' @keywords internal
+fp_projections_parse.fp_nhl <- function(response){
+
+}
+
+#' NBA method for fp_rankings
+#' @describeIn fp_rankings_parse
+#'
+#' @keywords internal
+fp_projections_parse.fp_nba <- function(response){
+
+}

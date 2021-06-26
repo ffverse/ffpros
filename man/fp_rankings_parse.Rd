@@ -2,6 +2,7 @@
 % Please edit documentation in R/fp_projections.R, R/fp_rankings.R
 \name{fp_projections_parse.fp_nfl}
 \alias{fp_projections_parse.fp_nfl}
+\alias{fp_projections_parse.fp_nba}
 \alias{fp_rankings_parse}
 \alias{fp_rankings_parse.fp_nfl}
 \alias{fp_rankings_parse.fp_nhl}
@@ -10,6 +11,8 @@
 \title{NFL method for fp_rankings}
 \usage{
 \method{fp_projections_parse}{fp_nfl}(response)
+
+\method{fp_projections_parse}{fp_nba}(response)
 
 fp_rankings_parse(response)
 
@@ -24,6 +27,8 @@ fp_rankings_parse(response)
 \description{
 NFL method for fp_rankings
 
+MLB method for fp_rankings
+
 Dispatch fp_rankings_parse
 
 NFL method for fp_rankings
@@ -37,6 +42,8 @@ MLB method for fp_rankings
 \section{Methods (by class)}{
 \itemize{
 \item \code{fp_nfl}: 
+
+\item \code{fp_nba}: 
 
 \item \code{fp_nfl}: 
 
