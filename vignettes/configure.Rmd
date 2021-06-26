@@ -1,10 +1,10 @@
 ---
-title: "Configure"
+title: "Configuration Options"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 author: Tan Ho
 vignette: >
-  %\VignetteIndexEntry{Configure}
+  %\VignetteIndexEntry{Configuration Options}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,10 +12,97 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
 
-```{r setup, eval = FALSE}
-# library(ffpros)
+```{r setup}
+library(ffpros)
 ```
+
+The ffpros package has several configuration options, most of which control default behaviours for functions.
+
+## Caching
+
+This option controls caching of requests, and is the only option that needs to be set ***before*** the package is loaded.
+
+The available options are `"memory"` (default), `"filesystem"` (persistent between R sessions), and `"off"`.
+
+Pages are stored for one (1) hour.
+
+Basic example:
+
+```{r}
+options(ffpros.cache = "memory") 
+options(ffpros.cache = "filesystem")
+options(ffpros.cache = "off")
+
+## THEN ##
+
+library(ffpros) ## OR
+ffpros::fp_rankings("consensus-cheatsheets")
+```
+
+You can use `usethis::edit_r_profile()` to include this option in your R profile, which will automatically load before the ffpros package in future sessions.
+
+## Ratelimiting
+
+This package respects the crawl delay set out in the [robots.txt](https://www.fantasypros.com/robots.txt) which asks for five seconds per request. To change this configuration, you can use the `fp_set_ratelimit()` function:
+
+```{r}
+
+fp_set_ratelimit(
+  rate_number = 2, # two requests every...
+  rate_seconds = 2 # two seconds
+  ) 
+
+fp_set_ratelimit(
+  rate_limit = FALSE # turns off ratelimiting
+)
+
+```
+
+## Sport
+
+The default sport for all ffpros functions is NFL. To change this, you can set the ffpros.sport option, which needs to be one of `"nfl"`, `"nba"`, `"nhl"`, or `"mlb"`:
+
+```{r}
+options(ffpros.sport = "nhl")
+options(ffpros.sport = "nba")
+```
+
+You can also use the `fp_set_sport()` function to accomplish the same thing:
+
+```{r}
+fp_set_sport("nhl")
+fp_set_sport("mlb")
+```
+
+You ***should not*** set this option in your rprofile, since it materially changes how ffpros operates - functions will start returning different output by default. Instead, always set it at the top of any required script.
+
+## Metadata
+
+By default, ffpros functions return only the cleaned data, but it can be configured to return the page HTML as well as any additional metadata, in case you want to parse the page on your own.
+
+This can be set with either of the following two methods:
+
+```{r}
+options(ffpros.include_metadata = TRUE)
+## OR ##
+fp_set_metadata(include = TRUE)
+
+```
+
+This function, as with the sport option, changes how ffpros functions behave in a material way - so you ***should not*** set this option in your rprofile. Instead, always set it at the top of any required script.
+
+## User Agent
+
+ffpros will default to identifying itself to FantasyPros.com as `"ffpros R client package https://github.com/dynastyprocess/ffpros"`. If you would like to pass a different user agent, you can configure this with either of the following two methods:
+
+```{r}
+fp_set_useragent("my_user_agent")
+options(ffpros.user_agent = "my_user_agent")
+```
+
+There's no significant difference between either of these methods and you can set it in your rprofile if you wish.
