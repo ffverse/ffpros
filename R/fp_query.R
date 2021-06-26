@@ -8,9 +8,9 @@
 
   fn_get <- get("get", envir = .ffpros_env)
 
-  user_agent <- get("user_agent", envir = .ffpros_env)
+  user_agent <- getOption("ffpros.user_agent")
 
-  response <- fn_get(url_query, user_agent)
+  response <- fn_get(url_query, httr::user_agent(user_agent))
 
   if (httr::http_error(response)) {
     warning(glue::glue("FantasyPros.com request failed with error: <{httr::status_code(response)}> \n
