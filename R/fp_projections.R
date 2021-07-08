@@ -13,10 +13,14 @@
 #' @examples
 #' \donttest{
 #' if(interactive()){
-#' fp_projections("qb")
-#' fp_projections("wr", year = 2016, week = 2, scoring = "PPR")
-#' fp_projections("flex", year = 2020, week = 7, scoring = "PPR", `min-yes`="true", `max-yes`="true")
-#' }
+#'   fp_projections("qb")
+#'   fp_projections("wr", year = 2016, week = 2, scoring = "PPR")
+#'   fp_projections("flex", year = 2020, week = 7, scoring = "PPR", `min-yes`="true", `max-yes`="true")
+#'
+#'   fp_projections("hitters", `min-yes` = "true", `max-yes` = "true", sport = "mlb")
+#'   fp_projections("pitchers", sport = "mlb")
+#'
+#'   fp_projections("overall", sport = "nba")
 #' }
 #'
 #' @export
@@ -38,11 +42,11 @@ fp_projections <- function(page,
 
   response <- .fp_get(url_query, sport)
 
-  parsed_rankings <- fp_projections_parse(response)
+  parsed_projections <- fp_projections_parse(response)
 
-  if(!include_metadata) return(parsed_rankings$projections)
+  if(!include_metadata) return(parsed_projections$projections)
 
-  return(parsed_rankings)
+  return(parsed_projections)
 }
 
 #' Dispatch fp_projections_parse
@@ -135,7 +139,7 @@ fp_projections_parse.fp_nfl <- function(response){
              dimnames = list(seq_len(nrow(player_info)),
                              max_names[max_names!="pos_max"])
       ) %>%
-      tibble::as_tibble() %>%
+      tibble::as_tibble(.name_repair = "minimal") %>%
       dplyr::select(-"player_max")
 
   }
@@ -154,7 +158,7 @@ fp_projections_parse.fp_nfl <- function(response){
              dimnames = list(1:nrow(player_info),
                              min_names[min_names!="pos_min"])
       ) %>%
-      tibble::as_tibble() %>%
+      tibble::as_tibble(.name_repair = "minimal") %>%
       dplyr::select(-"player_min")
 
   }
@@ -170,7 +174,7 @@ fp_projections_parse.fp_nfl <- function(response){
            dimnames = list(1:nrow(player_info),
                            mean_names[!mean_names %in% c("player_mean", "pos_mean")])
     ) %>%
-    tibble::as_tibble()
+    tibble::as_tibble(.name_repair = "minimal")
 
   if(stringr::str_detect(response$query, "flex")) {
 
@@ -205,13 +209,153 @@ fp_projections_parse.fp_nfl <- function(response){
 #' @keywords internal
 fp_projections_parse.fp_mlb <- function(response){
 
+  table_html <- response$content %>%
+    rvest::html_node("#data")
+
+  suppressWarnings(
+    player_info <- tibble::tibble(
+      fantasypros_id =
+        table_html %>%
+        rvest::html_nodes(".fp-player-link") %>%
+        rvest::html_attr("class") %>%
+        stringr::str_extract_all("[0-9]+$") %>%
+        unlist(),
+      player_name =
+        table_html %>%
+        rvest::html_nodes(".fp-player-link") %>%
+        rvest::html_attr("fp-player-name"),
+      node = table_html %>%
+        rvest::html_nodes("td:nth-child(1)") %>%
+        rvest::html_node("small") %>%
+        rvest::html_text()
+    ) %>%
+      dplyr::mutate(
+        team = ifelse(
+          stringr::str_detect(.data$node,"\\-"),
+          .data$node %>%
+            stringr::str_extract_all( "\\(([A-Z]+) \\-") %>%
+            stringr::str_remove_all("\\(|\\-") %>%
+            stringr::str_squish(),
+          NA_character_),
+        pos = .data$node %>%
+          stringr::str_extract_all(("([[:alnum:],]+)\\)")) %>%
+          stringr::str_remove_all("\\)") %>%
+          stringr::str_squish(),
+        node = NULL
+      )
+  )
+
+  #### Base Case ####
+
+  if(stringr::str_detect(response$query, "max\\-yes", negate = TRUE) ||
+     stringr::str_detect(response$query, "min\\-yes", negate =  TRUE)){
+
+    projections <- rvest::html_table(table_html) %>%
+      magrittr::extract(,names(rvest::html_table(table_html))!="") %>%
+      janitor::clean_names() %>%
+      dplyr::select(-player)
+
+    table_out <- projections %>%
+      dplyr::bind_cols(player_info) %>%
+      dplyr::mutate(
+        dplyr::across(-names(player_info),
+                      ~ stringr::str_remove(.x,",|%") %>%
+                        dplyr::na_if("NULL") %>%
+                        as.numeric())
+      ) %>%
+      dplyr::select(
+        dplyr::all_of(names(player_info)),
+        dplyr::everything()
+      )
+
+    return(list(projections = table_out, response = response$response))
+  }
+
+  ## If min and max projections are displayed, do this
+
+  max_cells <- NULL
+
+  if(stringr::str_detect(response$query, "max\\-yes\\=true")) {
+    max_names <- names(rvest::html_table(table_html))
+    max_names <- ifelse(max_names == "","", paste0(max_names,"_max") %>% janitor::make_clean_names())
+
+    max_cells <- table_html %>%
+      rvest::html_nodes(".max-cell") %>%
+      rvest::html_text() %>%
+      matrix(nrow = nrow(player_info),
+             byrow = TRUE,
+             dimnames = list(seq_len(nrow(player_info)),
+                             max_names[max_names!="rost_percent_max" & max_names !=""])
+      ) %>%
+      tibble::as_tibble(.name_repair = "minimal") %>%
+      dplyr::select(-"player_max")
+
+  }
+
+  min_cells <- NULL
+
+  if(stringr::str_detect(response$query, "min\\-yes\\=true")) {
+
+    min_names <- names(rvest::html_table(table_html))
+    min_names <- ifelse(min_names == "","", paste0(min_names,"_min") %>% janitor::make_clean_names())
+
+    min_cells <- table_html %>%
+      rvest::html_nodes(".min-cell") %>%
+      rvest::html_text() %>%
+      matrix(nrow = nrow(player_info),
+             byrow = TRUE,
+             dimnames = list(seq_len(nrow(player_info)),
+                             min_names[min_names!="rost_percent_min" & min_names !=""])
+      ) %>%
+      tibble::as_tibble(.name_repair = "minimal") %>%
+      dplyr::select(-"player_min")
+  }
+
+  mean_names <- names(rvest::html_table(table_html))
+  mean_names <- ifelse(
+    mean_names == "",
+    "",
+    paste0(mean_names,"_mean") %>%
+      janitor::make_clean_names()) %>%
+    tail(-1)
+
+  mean_cells <- table_html %>%
+    rvest::html_nodes("td:not(:first-child)") %>%
+    xml2::as_list() %>%
+    purrr::map(purrr::pluck(1)) %>%
+    as.character() %>%
+    matrix(nrow = nrow(player_info),
+           byrow = TRUE,
+           dimnames = list(1:nrow(player_info),
+                           mean_names)
+    ) %>%
+    tibble::as_tibble(.name_repair = "minimal") %>%
+    magrittr::extract(,mean_names !="")
+
+  table_out <- dplyr::bind_cols(player_info,mean_cells,max_cells,min_cells) %>%
+    dplyr::mutate(
+      dplyr::across(-names(player_info),
+                    ~ stringr::str_remove(.x,",|%") %>%
+                      dplyr::na_if("NULL") %>%
+                      as.numeric()),
+      dplyr::across(dplyr::matches("percent"), ~.x/100)
+    ) %>%
+    dplyr::select(
+      dplyr::all_of(names(player_info)),
+      dplyr::everything()
+    )
+
+  return(list(projections = table_out, response = response$response))
+
+
 }
 #' NHL method for fp_rankings
 #' @describeIn fp_rankings_parse
 #'
 #' @keywords internal
 fp_projections_parse.fp_nhl <- function(response){
-
+  warning("No projections for NHL yet")
+  return(response)
 }
 
 #' NBA method for fp_rankings
@@ -220,4 +364,53 @@ fp_projections_parse.fp_nhl <- function(response){
 #' @keywords internal
 fp_projections_parse.fp_nba <- function(response){
 
+  table_html <- response$content %>%
+    rvest::html_node("#data")
+
+  player_labels <- table_html %>%
+    rvest::html_nodes(".player-label")
+
+  player_info <- tibble::tibble(
+    fantasypros_id =
+      player_labels %>%
+      rvest::html_nodes(".fp-player-link") %>%
+      rvest::html_attr("class") %>%
+      stringr::str_extract_all("[0-9]+$") %>%
+      unlist(),
+    player_name =
+      player_labels %>%
+      rvest::html_nodes(".fp-player-link") %>%
+      rvest::html_attr("fp-player-name"),
+    team = rvest::html_text(player_labels) %>% tail(-1)
+  ) %>%
+    tidyr::extract(
+      .data$team,
+      into = c("team","pos"),
+      regex = "(\\([A-Z]+ )\\- ([A-Z,]+\\))"
+    ) %>%
+    dplyr::mutate(
+      pos = stringr::str_remove_all(.data$pos,"\\)") %>% stringr::str_squish(),
+      team = stringr::str_remove_all(.data$team,"\\(") %>% stringr::str_squish()
+    )
+
+  projections <- rvest::html_table(table_html) %>%
+    janitor::clean_names() %>%
+    dplyr::rename_with(
+      ~stringr::str_replace(.x,"percent","pct") %>%
+        stringr::str_replace("x3pm","threes_made")
+    ) %>%
+    dplyr::select(-"player") %>%
+    dplyr::bind_cols(player_info) %>%
+    dplyr::select(
+      dplyr::all_of(names(player_info)),
+      dplyr::everything()
+    ) %>%
+    dplyr::mutate(
+      dplyr::across(-names(player_info),
+                    ~ stringr::str_remove(.x,",") %>%
+                      as.numeric()
+      )
+    )
+
+  return(list(projections = projections, response = response$response))
 }
