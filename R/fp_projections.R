@@ -22,7 +22,7 @@
 #'
 #'   fp_projections("overall", sport = "nba")
 #' }
-#'
+#'}
 #' @export
 fp_projections <- function(page,
                            ...,
@@ -103,7 +103,7 @@ fp_projections_parse.fp_nfl <- function(response){
 
     table_out <- projections %>%
       tail(-2) %>%
-      setNames(table_names) %>%
+      stats::setNames(table_names) %>%
       dplyr::bind_cols(player_info) %>%
       dplyr::mutate(
         dplyr::across(dplyr::matches("passing_|rushing_|receiving_|misc_"),
@@ -253,7 +253,7 @@ fp_projections_parse.fp_mlb <- function(response){
     projections <- rvest::html_table(table_html) %>%
       magrittr::extract(,names(rvest::html_table(table_html))!="") %>%
       janitor::clean_names() %>%
-      dplyr::select(-player)
+      dplyr::select(-"player")
 
     table_out <- projections %>%
       dplyr::bind_cols(player_info) %>%

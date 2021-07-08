@@ -20,11 +20,13 @@ Scrapes FantasyPros ranks from the specified page (and optionally, returns metad
 }
 \examples{
 \donttest{
+if(interactive()){
 fp_rankings(page = "dynasty-overall")
 fp_rankings(page = "consensus-cheatsheets", year = 2017)
 fp_rankings(page = "overall", sport = "nba")
 fp_rankings(page = "ros-lw", sport = "nhl")
 fp_rankings(page = "nl-only-ros-overall", sport = "mlb")
+}
 }
 
 }

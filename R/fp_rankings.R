@@ -12,12 +12,14 @@
 #'
 #' @examples
 #' \donttest{
+#' if(interactive()){
 #' fp_rankings(page = "dynasty-overall")
 #' fp_rankings(page = "consensus-cheatsheets", year = 2017)
 #' fp_rankings(page = "overall", sport = "nba")
 #' fp_rankings(page = "ros-lw", sport = "nhl")
 #' fp_rankings(page = "nl-only-ros-overall", sport = "mlb")
 #' }
+#'}
 #'
 #' @export
 
@@ -274,7 +276,11 @@ fp_rankings_parse.fp_mlb <- function(response){
       "worst" = "Worst",
       "adp" = "ADP"
     ))) %>%
-    dplyr::mutate_at(c("ecr","best","worst","rank","sd","adp"), as.numeric) %>%
+    dplyr::mutate_at(dplyr::vars(-c("fantasypros_id",
+                        "player_name",
+                        "pos",
+                        "team",
+                        "league")), as.numeric) %>%
     dplyr::mutate_at("fantasypros_id", as.character)
 
   return(list(ecr = ecr, response = response$response))
