@@ -44,6 +44,7 @@ jobs:
       - name: Install packages
         run: |
           pak::pak("pkgdown")
+          pak::local_install_dev_deps()
           pak::local_install()
         shell: Rscript {0}
 

@@ -87,18 +87,8 @@ fp_rankings(page = "ros-overall", sport = "nhl")
 #> # ... with 415 more rows
 ```
 
-## Default Options
-
-ffpros uses the following options to help configure default arguments:
-
-``` r
-options(ffpros.cache = "memory") # one of "memory", "filesystem", or "off", must be set *prior* to loading the package
-options(ffpros.sport = "nfl") # one of "nfl", "nba", "nhl", "mlb"
-options(ffpros.include_metadata = FALSE) # TRUE to return a list including associated metadata
-```
-
-There are also helper functions prefixed with `fp_set_` that help
-administer these options.
+Default configuration options are detailed in the [configuration options
+vignette](https://ffpros.dynastyprocess.com/articles).
 
 ## Support
 

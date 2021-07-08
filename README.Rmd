@@ -82,17 +82,9 @@ fp_rankings(page = "consensus-cheatsheets") # defaults to nfl!
 fp_rankings(page = "ros-overall", sport = "nhl")
 ```
 
-## Default Options
 
-ffpros uses the following options to help configure default arguments:
+Default configuration options are detailed in the [configuration options vignette](https://ffpros.dynastyprocess.com/articles). 
 
-```{r eval = FALSE}
-options(ffpros.cache = "memory") # one of "memory", "filesystem", or "off", must be set *prior* to loading the package
-options(ffpros.sport = "nfl") # one of "nfl", "nba", "nhl", "mlb"
-options(ffpros.include_metadata = FALSE) # TRUE to return a list including associated metadata
-```
-
-There are also helper functions prefixed with `fp_set_` that help administer these options.
 
 ## Support
 

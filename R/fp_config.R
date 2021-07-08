@@ -9,8 +9,7 @@ fp_set_useragent <- function(user_agent) {
 
   stopifnot(length(user_agent)==1, is.character(user_agent))
 
-  user_agent <- httr::user_agent(user_agent)
-  assign("user_agent", user_agent, envir = .ffpros_env)
+  options(ffpros.sport = user_agent)
 
   invisible(user_agent)
 }

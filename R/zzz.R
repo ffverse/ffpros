@@ -6,6 +6,14 @@
 
   if(is.null(getOption("ffpros.sport"))) options(ffpros.sport = "nfl")
   if(is.null(getOption("ffpros.include_metadata"))) options(ffpros.include_metadata = FALSE)
+  if(is.null(getOption("ffpros.user_agent"))) {
+    user_agent <- glue::glue(
+      "ffpros/{utils::packageVersion('ffpros')} ",
+      "R client package ",
+      "https://github.com/dynastyprocess/ffpros")
+
+    options(ffpros.user_agent = user_agent)
+  }
 
   # nocov start
 
@@ -27,18 +35,9 @@
     .fp_get <<-memoise::memoise(.fp_get, ~memoise::timeout(3600), cache = cache)
   }
 
-  user_agent <-
-    glue::glue(
-      "ffpros/{utils::packageVersion('ffpros')} ",
-      "API client package ",
-      "https://github.com/dynastyprocess/ffpros") %>%
-    httr::user_agent()
-
   # https://www.fantasypros.com/robots.txt
   # crawl-delay: 5
   get <-  ratelimitr::limit_rate(.retry_get, ratelimitr::rate(1, 5))
-
-  assign("user_agent", user_agent, envir = .ffpros_env)
   assign("get", get, envir = .ffpros_env)
 
   # nocov end
