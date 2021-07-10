@@ -37,10 +37,11 @@ navbar:
       text: "More"
       menu:
         - text: ffverse
+          href: https://ffverse.com
         - text: ffscrapr package
           href: https://ffscrapr.dynastyprocess.com
         - text: ffsimulator package
-          href: https://ffsimulator.dynastyprocess.com
+          href: https://ffsimulator.ffverse.com
         - text: ffverse GitHub
           href: https://www.github.com/ffverse
         - text: -------
