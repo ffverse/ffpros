@@ -9,7 +9,7 @@ with_mock_api({
     flex_2020_7 <- fp_projections("flex", year = 2020, week = 7, scoring = "PPR", `min-yes`="true", `max-yes`="true")
 
     checkmate::expect_tibble(qb, min.rows = 50, min.cols = 10)
-    checkmate::expect_tibble(wr_draft_2016, min.rows = 80, min.cols = 10)
+    checkmate::expect_tibble(wr_draft_2016, min.rows = 40, min.cols = 10)
     checkmate::expect_tibble(flex_2020_7, min.rows = 200, min.cols = 20)
   })
 #
