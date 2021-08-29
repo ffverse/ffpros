@@ -98,7 +98,7 @@ This function, as with the sport option, changes how ffpros functions behave in 
 
 ## User Agent
 
-ffpros will default to identifying itself to FantasyPros.com as `"ffpros R client package https://github.com/dynastyprocess/ffpros"`. If you would like to pass a different user agent, you can configure this with either of the following two methods:
+ffpros will default to identifying itself to FantasyPros.com as `"ffpros R client package https://github.com/ffverse/ffpros"`. If you would like to pass a different user agent, you can configure this with either of the following two methods:
 
 ```{r}
 fp_set_useragent("my_user_agent")

@@ -10,7 +10,7 @@
     user_agent <- glue::glue(
       "ffpros/{utils::packageVersion('ffpros')} ",
       "R client package ",
-      "https://github.com/dynastyprocess/ffpros")
+      "https://github.com/ffverse/ffpros")
 
     options(ffpros.user_agent = user_agent)
   }

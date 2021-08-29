@@ -3,8 +3,8 @@ library(xfun)
 paths <- c(
   "ffpros-tests-1.4.2",
   "ffpros-tests-main",
-  "https://github.com/dynastyprocess/ffpros-tests/archive/main.zip",
-  "https://github.com/dynastyprocess/ffpros-tests/archive/1.4.2.zip"
+  "https://github.com/ffverse/ffpros-tests/archive/main.zip",
+  "https://github.com/ffverse/ffpros-tests/archive/1.4.2.zip"
 )
 
 use_ffpros_tests_main <- function(){
