@@ -14,7 +14,7 @@ URL: https://ffpros.dynastyprocess.com,
     https://github.com/dynastyprocess/ffpros
 BugReports: https://github.com/dynastyprocess/ffpros/issues
 Depends: 
-    R (>= 4.0.0)
+    R (>= 3.6.0)
 Imports: 
     cachem (>= 1.0.0),
     checkmate (>= 2.0.0),
