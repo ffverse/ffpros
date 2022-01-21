@@ -90,35 +90,63 @@ fp_projections_parse.fp_nfl <- function(response){
 
   projections <- rvest::html_table(table_html)
 
-  table_names <- projections %>%
-    dplyr::slice(1:2) %>%
-    as.matrix() %>%
-    apply(2,paste, collapse = "_") %>%
-    janitor::make_clean_names()
+  # If simpler K and DST table get table names from the parsed table
+  if( names(projections)[1]  == "Player" ){
+
+    projections <- janitor::clean_names(projections)
+    table_names <- names(projections)
+
+  }else{
+    #otherwise process the top two rows to get the table names
+    table_names <- projections %>%
+      dplyr::slice(1:2) %>%
+      as.matrix() %>%
+      apply(2,paste, collapse = "_") %>%
+      janitor::make_clean_names()
+
+  }
+
+
 
   #### Base Case ####
 
   if(stringr::str_detect(response$query, "max\\-yes", negate = TRUE) ||
      stringr::str_detect(response$query, "min\\-yes", negate =  TRUE)){
 
-    table_out <- projections %>%
-      tail(-2) %>%
-      stats::setNames(table_names) %>%
-      dplyr::bind_cols(player_info) %>%
-      dplyr::mutate(
-        dplyr::across(dplyr::matches("passing_|rushing_|receiving_|misc_"),
-                      ~ stringr::str_remove(.x,",") %>% as.numeric())
-      ) %>%
-      dplyr::select(
-        "fantasypros_id",
-        "player_name",
-        dplyr::starts_with("pos"),
-        "team",
-        dplyr::starts_with("passing_"),
-        dplyr::starts_with("rushing_"),
-        dplyr::starts_with("receiving_"),
-        dplyr::starts_with("misc_")
-      )
+    # If simpler K and DST table keep all rows
+    if( names(projections)[1]  == "player" ){
+
+      table_out <- projections %>%
+        dplyr::bind_cols(player_info) %>%
+        dplyr::select(
+          "fantasypros_id",
+          "player_name",
+          "team",
+          everything()
+        )
+
+    }else{
+      # Otherwise drop the first two rows since they are the table names
+      table_out <- projections %>%
+        tail(-2) %>%
+        stats::setNames(table_names) %>%
+        dplyr::bind_cols(player_info) %>%
+        dplyr::mutate(
+          dplyr::across(dplyr::matches("passing_|rushing_|receiving_|misc_"),
+                        ~ stringr::str_remove(.x,",") %>% as.numeric())
+        ) %>%
+        dplyr::select(
+          "fantasypros_id",
+          "player_name",
+          dplyr::starts_with("pos"),
+          "team",
+          dplyr::starts_with("passing_"),
+          dplyr::starts_with("rushing_"),
+          dplyr::starts_with("receiving_"),
+          dplyr::starts_with("misc_")
+        )
+    }
+
 
     return(list(projections = table_out, response = response$response))
   }
@@ -188,17 +216,29 @@ fp_projections_parse.fp_nfl <- function(response){
     dplyr::mutate(
       dplyr::across(dplyr::matches("passing_|rushing_|receiving_|misc_"),
                     ~ stringr::str_remove(.x,",") %>% as.numeric())
-    ) %>%
-    dplyr::select(
-      "fantasypros_id",
-      "player_name",
-      dplyr::starts_with("pos"),
-      "team",
-      dplyr::starts_with("passing_"),
-      dplyr::starts_with("rushing_"),
-      dplyr::starts_with("receiving_"),
-      dplyr::starts_with("misc_")
     )
+
+  #handle offensive players
+  if("misc" %in% names(table_out)){
+    table_out <- dplyr::select(table_out,
+                               "fantasypros_id",
+                               "player_name",
+                               dplyr::starts_with("pos"),
+                               "team",
+                               dplyr::starts_with("passing_"),
+                               dplyr::starts_with("rushing_"),
+                               dplyr::starts_with("receiving_"),
+                               dplyr::starts_with("misc_")
+                               )
+  }else{
+    table_out <- dplyr::select(table_out,
+                               "fantasypros_id",
+                               "player_name",
+                               dplyr::starts_with("pos"),
+                               "team",
+                               everything()
+                               )
+  }
 
   return(list(projections = table_out, response = response$response))
 }
