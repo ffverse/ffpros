@@ -122,7 +122,7 @@ fp_projections_parse.fp_nfl <- function(response){
           "fantasypros_id",
           "player_name",
           "team",
-          everything()
+          dplyr::everything()
         )
 
     }else{
@@ -236,7 +236,7 @@ fp_projections_parse.fp_nfl <- function(response){
                                "player_name",
                                dplyr::starts_with("pos"),
                                "team",
-                               everything()
+                               dplyr::everything()
                                )
   }
 
