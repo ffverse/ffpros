@@ -1,18 +1,18 @@
 Package: ffpros
 Title: Retrieves Data from FantasyPros
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: 
     person(given = "Tan",
            family = "Ho",
-           role = c("aut", "cre"),
+           role = c("aut", "cre","cph"),
            email = "tan@tanho.ca")
 Description: Helps gather data from FantasyPros.com with
     rate-limiting/caching, forming appropriate calls, and returning tidy
     dataframes which can be easily connected to other data sources.
 License: MIT + file LICENSE
-URL: https://ffpros.dynastyprocess.com,
-    https://github.com/dynastyprocess/ffpros
-BugReports: https://github.com/dynastyprocess/ffpros/issues
+URL: https://ffpros.ffverse.com,
+    https://github.com/ffverse/ffpros
+BugReports: https://github.com/ffverse/ffpros/issues
 Depends: 
     R (>= 3.6.0)
 Imports: 
