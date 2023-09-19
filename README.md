@@ -34,17 +34,9 @@ Install the stable version of this package from the [ffverse r-universe
 repository](https://ffverse.r-universe.dev):
 
 ``` r
-install.packages("ffpros", repos = "https://ffverse.r-universe.dev")
-```
-
-Install the development version with either [DynastyProcess’s
-r-universe](https://dynastyprocess.r-universe.dev) or remotes + GitHub:
-
-``` r
-# ffverse's r-universe
-install.packages("ffpros", repos = "https://dynastyprocess.r-universe.dev")
-
-# or via GitHub c/o remotes/devtools: # install.packages('remotes')
+install.packages("ffpros", repos = c("https://ffverse.r-universe.dev", getOption("repos")))
+# or via GitHub c/o remotes/devtools:
+# install.packages('remotes')
 remotes::install_github("dynastyprocess/ffpros")
 ```
 
