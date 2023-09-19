@@ -132,59 +132,58 @@
 <div class="page-header"><h1 id="ffpros-">ffpros <a href="#"><img src="reference/figures/logo.png" align="right" width="25%" min-width="120px"></a>
 <a class="anchor" aria-label="anchor" href="#ffpros-"></a>
 </h1></div>
-<!-- badges: start --><!-- [![CRAN status](https://img.shields.io/cran/v/ffpros?style=flat-square&logo=R&label=CRAN)](https://CRAN.R-project.org/package=ffpros)  -->
-<!-- badges: end --><p>Helps scrape FantasyPros.com by handling rate-limiting/caching/parsing and returning tidy dataframes which can be easily connected to other data sources.</p>
+<!-- badges: start -->
+<!-- [![CRAN status](https://img.shields.io/cran/v/ffpros?style=flat-square&logo=R&label=CRAN)](https://CRAN.R-project.org/package=ffpros)  -->
+
+<!-- badges: end -->
+<p>Helps scrape FantasyPros.com by handling rate-limiting/caching/parsing and returning tidy dataframes which can be easily connected to other data sources.</p>
 <p><em>Renamed from fpscrapr to ffpros on 2021-06-14 so that all ffverse packages start with ff</em></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install the stable version of this package from the <a href="https://ffverse.r-universe.dev" class="external-link">ffverse r-universe repository</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ffpros"</span>, repos <span class="op">=</span> <span class="st">"https://ffverse.r-universe.dev"</span><span class="op">)</span></code></pre></div>
-<p>Install the development version with either <a href="https://dynastyprocess.r-universe.dev" class="external-link">DynastyProcess’s r-universe</a> or remotes + GitHub:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># ffverse's r-universe</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ffpros"</span>, repos <span class="op">=</span> <span class="st">"https://dynastyprocess.r-universe.dev"</span><span class="op">)</span>
-
-<span class="co"># or via GitHub c/o remotes/devtools: # install.packages('remotes')</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dynastyprocess/ffpros"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ffpros"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://ffverse.r-universe.dev"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># or via GitHub c/o remotes/devtools:</span></span>
+<span><span class="co"># install.packages('remotes')</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dynastyprocess/ffpros"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <p>All <code>ffpros</code> functions start with fp_ for ease of autocomplete.</p>
 <p>The fp_rankings function retrieves fantasy ranks from FantasyPros.com.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffpros.ffverse.com">ffpros</a></span><span class="op">)</span>
-
-<span class="fu"><a href="reference/fp_rankings.html">fp_rankings</a></span><span class="op">(</span>page <span class="op">=</span> <span class="st">"consensus-cheatsheets"</span><span class="op">)</span> <span class="co"># defaults to nfl!</span>
-<span class="co">#&gt; # A tibble: 495 x 27</span>
-<span class="co">#&gt;   fantasypros_id player_name         pos   team   rank   ecr    sd  best worst</span>
-<span class="co">#&gt;            &lt;int&gt; &lt;chr&gt;               &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1          16393 Christian McCaffrey RB    CAR       1  1.2   0.72     1     6</span>
-<span class="co">#&gt; 2          16374 Dalvin Cook         RB    MIN       2  2.2   0.57     1     4</span>
-<span class="co">#&gt; 3          15514 Derrick Henry       RB    TEN       3  2.99  0.63     1     7</span>
-<span class="co">#&gt; 4          17240 Saquon Barkley      RB    NYG       4  5.35  2.24     2    22</span>
-<span class="co">#&gt; 5          17246 Nick Chubb          RB    CLE       5  6.35  2.33     3    20</span>
-<span class="co">#&gt; # ... with 490 more rows, and 18 more variables: sportradar_id &lt;chr&gt;,</span>
-<span class="co">#&gt; #   yahoo_id &lt;chr&gt;, cbs_id &lt;chr&gt;, player_positions &lt;chr&gt;,</span>
-<span class="co">#&gt; #   player_short_name &lt;chr&gt;, player_eligibility &lt;chr&gt;,</span>
-<span class="co">#&gt; #   player_yahoo_positions &lt;chr&gt;, player_page_url &lt;chr&gt;, player_filename &lt;chr&gt;,</span>
-<span class="co">#&gt; #   player_square_image_url &lt;chr&gt;, player_image_url &lt;chr&gt;,</span>
-<span class="co">#&gt; #   player_bye_week &lt;chr&gt;, player_owned_avg &lt;dbl&gt;, player_owned_espn &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   player_owned_yahoo &lt;int&gt;, player_ecr_delta &lt;int&gt;, pos_rank &lt;chr&gt;,</span>
-<span class="co">#&gt; #   tier &lt;int&gt;</span>
-
-<span class="fu"><a href="reference/fp_rankings.html">fp_rankings</a></span><span class="op">(</span>page <span class="op">=</span> <span class="st">"ros-overall"</span>, sport <span class="op">=</span> <span class="st">"nhl"</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 420 x 9</span>
-<span class="co">#&gt;   fantasypros_id player_name     team  pos    rank   ecr    sd  best worst</span>
-<span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 16664          Connor McDavid  EDM   C,F       1   1.5   0.5     1     2</span>
-<span class="co">#&gt; 2 17201          Auston Matthews TOR   C,F       2   2.5   1.5     1     4</span>
-<span class="co">#&gt; 3 16669          Mitchell Marner TOR   RW,F      3   8.5   5.5     3    14</span>
-<span class="co">#&gt; 4 16588          Leon Draisaitl  EDM   C,LW      4  10     7       3    17</span>
-<span class="co">#&gt; 5 15373          Patrick Kane    CHI   RW,F      5  12     1      11    13</span>
-<span class="co">#&gt; # ... with 415 more rows</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffpros.ffverse.com">ffpros</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/fp_rankings.html">fp_rankings</a></span><span class="op">(</span>page <span class="op">=</span> <span class="st">"consensus-cheatsheets"</span><span class="op">)</span> <span class="co"># defaults to nfl!</span></span>
+<span><span class="co">#&gt; # A tibble: 495 x 27</span></span>
+<span><span class="co">#&gt;   fantasypros_id player_name         pos   team   rank   ecr    sd  best worst</span></span>
+<span><span class="co">#&gt;            &lt;int&gt; &lt;chr&gt;               &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1          16393 Christian McCaffrey RB    CAR       1  1.2   0.72     1     6</span></span>
+<span><span class="co">#&gt; 2          16374 Dalvin Cook         RB    MIN       2  2.2   0.57     1     4</span></span>
+<span><span class="co">#&gt; 3          15514 Derrick Henry       RB    TEN       3  2.99  0.63     1     7</span></span>
+<span><span class="co">#&gt; 4          17240 Saquon Barkley      RB    NYG       4  5.35  2.24     2    22</span></span>
+<span><span class="co">#&gt; 5          17246 Nick Chubb          RB    CLE       5  6.35  2.33     3    20</span></span>
+<span><span class="co">#&gt; # ... with 490 more rows, and 18 more variables: sportradar_id &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   yahoo_id &lt;chr&gt;, cbs_id &lt;chr&gt;, player_positions &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   player_short_name &lt;chr&gt;, player_eligibility &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   player_yahoo_positions &lt;chr&gt;, player_page_url &lt;chr&gt;, player_filename &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   player_square_image_url &lt;chr&gt;, player_image_url &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   player_bye_week &lt;chr&gt;, player_owned_avg &lt;dbl&gt;, player_owned_espn &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   player_owned_yahoo &lt;int&gt;, player_ecr_delta &lt;int&gt;, pos_rank &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   tier &lt;int&gt;</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/fp_rankings.html">fp_rankings</a></span><span class="op">(</span>page <span class="op">=</span> <span class="st">"ros-overall"</span>, sport <span class="op">=</span> <span class="st">"nhl"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 420 x 9</span></span>
+<span><span class="co">#&gt;   fantasypros_id player_name     team  pos    rank   ecr    sd  best worst</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 16664          Connor McDavid  EDM   C,F       1   1.5   0.5     1     2</span></span>
+<span><span class="co">#&gt; 2 17201          Auston Matthews TOR   C,F       2   2.5   1.5     1     4</span></span>
+<span><span class="co">#&gt; 3 16669          Mitchell Marner TOR   RW,F      3   8.5   5.5     3    14</span></span>
+<span><span class="co">#&gt; 4 16588          Leon Draisaitl  EDM   C,LW      4  10     7       3    17</span></span>
+<span><span class="co">#&gt; 5 15373          Patrick Kane    CHI   RW,F      5  12     1      11    13</span></span>
+<span><span class="co">#&gt; # ... with 415 more rows</span></span></code></pre></div>
 <p>Default configuration options are detailed in the <a href="https://ffpros.dynastyprocess.com/articles" class="external-link">configuration options vignette</a>.</p>
 </div>
 <div class="section level2">
@@ -238,6 +237,7 @@
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+<li><a href="SUPPORT.html">Getting help</a></li>
 </ul>
 </div>
 
@@ -256,17 +256,7 @@
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://ffpros.dynastyprocess.com/" class="external-link"><img src="https://img.shields.io/github/r-package/v/dynastyprocess/ffpros/main?label=dev%20version&amp;style=flat-square&amp;logo=github" alt="Dev status"></a></li>
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://github.com/DynastyProcess/ffpros/actions" class="external-link"><img src="https://img.shields.io/github/workflow/status/dynastyprocess/ffpros/R-CMD-check?label=R%20check&amp;style=flat-square&amp;logo=github" alt="R build status"></a></li>
-<li><a href="https://github.com/DynastyProcess/ffpros/actions" class="external-link"><img src="https://img.shields.io/github/workflow/status/dynastyprocess/ffpros/TestLiveSite?label=Live%20check&amp;style=flat-square&amp;logo=github" alt="Live test status"></a></li>
-<li><a href="https://codecov.io/gh/DynastyProcess/ffpros?branch=main" class="external-link"><img src="https://img.shields.io/codecov/c/github/dynastyprocess/ffpros?label=codecov&amp;style=flat-square&amp;logo=codecov" alt="Codecov test coverage"></a></li>
-<li><a href="https://discord.com/invite/5Er2FBnnQa" class="external-link"><img src="htthttps://img.shields.io/discord/789805604076126219?color=7289da&amp;label=nflverse%20discord&amp;logo=discord&amp;logoColor=fff&amp;style=flat-square" alt="nflverse discord"></a></li>
-</ul>
-</div>
+
 
   </div>
 </div>
@@ -279,7 +269,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

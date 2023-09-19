@@ -97,19 +97,26 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fp_projections</span><span class="op">(</span><span class="va">page</span>, <span class="va">...</span>, sport <span class="op">=</span> <span class="cn">NULL</span>, include_metadata <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fp_projections</span><span class="op">(</span><span class="va">page</span>, <span class="va">...</span>, sport <span class="op">=</span> <span class="cn">NULL</span>, include_metadata <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>page</dt>
 <dd><p>which page</p></dd>
+
+
 <dt>...</dt>
 <dd><p>named arguments to pass as query parameters</p></dd>
+
+
 <dt>sport</dt>
 <dd><p>the sport to look up, defaults to nfl</p></dd>
+
+
 <dt>include_metadata</dt>
 <dd><p>logical - default FALSE (only return tibble), if TRUE returns list with both tibble and metadata</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -119,18 +126,18 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span class="r-in">  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"qb"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"wr"</span>, year <span class="op">=</span> <span class="fl">2016</span>, week <span class="op">=</span> <span class="fl">2</span>, scoring <span class="op">=</span> <span class="st">"PPR"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"flex"</span>, year <span class="op">=</span> <span class="fl">2020</span>, week <span class="op">=</span> <span class="fl">7</span>, scoring <span class="op">=</span> <span class="st">"PPR"</span>, `min-yes`<span class="op">=</span><span class="st">"true"</span>, `max-yes`<span class="op">=</span><span class="st">"true"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"hitters"</span>, `min-yes` <span class="op">=</span> <span class="st">"true"</span>, `max-yes` <span class="op">=</span> <span class="st">"true"</span>, sport <span class="op">=</span> <span class="st">"mlb"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"pitchers"</span>, sport <span class="op">=</span> <span class="st">"mlb"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"overall"</span>, sport <span class="op">=</span> <span class="st">"nba"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="co"># }</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"qb"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"wr"</span>, year <span class="op">=</span> <span class="fl">2016</span>, week <span class="op">=</span> <span class="fl">2</span>, scoring <span class="op">=</span> <span class="st">"PPR"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"flex"</span>, year <span class="op">=</span> <span class="fl">2020</span>, week <span class="op">=</span> <span class="fl">7</span>, scoring <span class="op">=</span> <span class="st">"PPR"</span>, `min-yes`<span class="op">=</span><span class="st">"true"</span>, `max-yes`<span class="op">=</span><span class="st">"true"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"hitters"</span>, `min-yes` <span class="op">=</span> <span class="st">"true"</span>, `max-yes` <span class="op">=</span> <span class="st">"true"</span>, sport <span class="op">=</span> <span class="st">"mlb"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"pitchers"</span>, sport <span class="op">=</span> <span class="st">"mlb"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="fu">fp_projections</span><span class="op">(</span><span class="st">"overall"</span>, sport <span class="op">=</span> <span class="st">"nba"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -145,7 +152,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

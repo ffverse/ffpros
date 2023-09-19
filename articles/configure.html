@@ -131,7 +131,7 @@
       <h1 data-toc-skip>Configuration Options</h1>
                         <h4 data-toc-skip class="author">Tan Ho</h4>
             
-            <h4 data-toc-skip class="date">2022-06-06</h4>
+            <h4 data-toc-skip class="date">2023-09-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ffverse/ffpros/blob/HEAD/vignettes/configure.Rmd" class="external-link"><code>vignettes/configure.Rmd</code></a></small>
       <div class="hidden name"><code>configure.Rmd</code></div>
@@ -141,73 +141,98 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffpros.ffverse.com">ffpros</a></span><span class="op">)</span></code></pre></div>
-<p>The ffpros package has several configuration options, most of which control default behaviours for functions.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffpros.ffverse.com">ffpros</a></span><span class="op">)</span></span></code></pre></div>
+<p>The ffpros package has several configuration options, most of which
+control default behaviours for functions.</p>
 <div class="section level2">
 <h2 id="caching">Caching<a class="anchor" aria-label="anchor" href="#caching"></a>
 </h2>
-<p>This option controls caching of requests, and is the only option that needs to be set <strong><em>before</em></strong> the package is loaded.</p>
-<p>The available options are <code>"memory"</code> (default), <code>"filesystem"</code> (persistent between R sessions), and <code>"off"</code>.</p>
+<p>This option controls caching of requests, and is the only option that
+needs to be set <strong><em>before</em></strong> the package is
+loaded.</p>
+<p>The available options are <code>"memory"</code> (default),
+<code>"filesystem"</code> (persistent between R sessions), and
+<code>"off"</code>.</p>
 <p>Pages are stored for one (1) hour.</p>
 <p>Basic example:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.cache <span class="op">=</span> <span class="st">"memory"</span><span class="op">)</span> 
-<span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.cache <span class="op">=</span> <span class="st">"filesystem"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.cache <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span>
-
-<span class="co">## THEN ##</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffpros.ffverse.com">ffpros</a></span><span class="op">)</span> <span class="co">## OR</span>
-<span class="fu">ffpros</span><span class="fu">::</span><span class="fu"><a href="../reference/fp_rankings.html">fp_rankings</a></span><span class="op">(</span><span class="st">"consensus-cheatsheets"</span><span class="op">)</span></code></pre></div>
-<p>You can use <code>usethis::edit_r_profile()</code> to include this option in your R profile, which will automatically load before the ffpros package in future sessions.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.cache <span class="op">=</span> <span class="st">"memory"</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.cache <span class="op">=</span> <span class="st">"filesystem"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.cache <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## THEN ##</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ffpros.ffverse.com">ffpros</a></span><span class="op">)</span> <span class="co">## OR</span></span>
+<span><span class="fu">ffpros</span><span class="fu">::</span><span class="fu"><a href="../reference/fp_rankings.html">fp_rankings</a></span><span class="op">(</span><span class="st">"consensus-cheatsheets"</span><span class="op">)</span></span></code></pre></div>
+<p>You can use <code>usethis::edit_r_profile()</code> to include this
+option in your R profile, which will automatically load before the
+ffpros package in future sessions.</p>
 </div>
 <div class="section level2">
 <h2 id="ratelimiting">Ratelimiting<a class="anchor" aria-label="anchor" href="#ratelimiting"></a>
 </h2>
-<p>This package respects the crawl delay set out in the <a href="https://www.fantasypros.com/robots.txt" class="external-link">robots.txt</a> which asks for five seconds per request. To change this configuration, you can use the <code><a href="../reference/fp_set_ratelimit.html">fp_set_ratelimit()</a></code> function:</p>
+<p>This package respects the crawl delay set out in the <a href="https://www.fantasypros.com/robots.txt" class="external-link">robots.txt</a> which asks
+for five seconds per request. To change this configuration, you can use
+the <code><a href="../reference/fp_set_ratelimit.html">fp_set_ratelimit()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="../reference/fp_set_ratelimit.html">fp_set_ratelimit</a></span><span class="op">(</span>
-  rate_number <span class="op">=</span> <span class="fl">2</span>, <span class="co"># two requests every...</span>
-  rate_seconds <span class="op">=</span> <span class="fl">2</span> <span class="co"># two seconds</span>
-  <span class="op">)</span> 
-
-<span class="fu"><a href="../reference/fp_set_ratelimit.html">fp_set_ratelimit</a></span><span class="op">(</span>
-  rate_limit <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># turns off ratelimiting</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/fp_set_ratelimit.html">fp_set_ratelimit</a></span><span class="op">(</span></span>
+<span>  rate_number <span class="op">=</span> <span class="fl">2</span>, <span class="co"># two requests every...</span></span>
+<span>  rate_seconds <span class="op">=</span> <span class="fl">2</span> <span class="co"># two seconds</span></span>
+<span>  <span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="../reference/fp_set_ratelimit.html">fp_set_ratelimit</a></span><span class="op">(</span></span>
+<span>  rate_limit <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># turns off ratelimiting</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="sport">Sport<a class="anchor" aria-label="anchor" href="#sport"></a>
 </h2>
-<p>The default sport for all ffpros functions is NFL. To change this, you can set the ffpros.sport option, which needs to be one of <code>"nfl"</code>, <code>"nba"</code>, <code>"nhl"</code>, or <code>"mlb"</code>:</p>
+<p>The default sport for all ffpros functions is NFL. To change this,
+you can set the ffpros.sport option, which needs to be one of
+<code>"nfl"</code>, <code>"nba"</code>, <code>"nhl"</code>, or
+<code>"mlb"</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.sport <span class="op">=</span> <span class="st">"nhl"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.sport <span class="op">=</span> <span class="st">"nba"</span><span class="op">)</span></code></pre></div>
-<p>You can also use the <code><a href="../reference/fp_set_sport.html">fp_set_sport()</a></code> function to accomplish the same thing:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.sport <span class="op">=</span> <span class="st">"nhl"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.sport <span class="op">=</span> <span class="st">"nba"</span><span class="op">)</span></span></code></pre></div>
+<p>You can also use the <code><a href="../reference/fp_set_sport.html">fp_set_sport()</a></code> function to
+accomplish the same thing:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fp_set_sport.html">fp_set_sport</a></span><span class="op">(</span><span class="st">"nhl"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/fp_set_sport.html">fp_set_sport</a></span><span class="op">(</span><span class="st">"mlb"</span><span class="op">)</span></code></pre></div>
-<p>You <strong><em>should not</em></strong> set this option in your rprofile, since it materially changes how ffpros operates - functions will start returning different output by default. Instead, always set it at the top of any required script.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fp_set_sport.html">fp_set_sport</a></span><span class="op">(</span><span class="st">"nhl"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/fp_set_sport.html">fp_set_sport</a></span><span class="op">(</span><span class="st">"mlb"</span><span class="op">)</span></span></code></pre></div>
+<p>You <strong><em>should not</em></strong> set this option in your
+rprofile, since it materially changes how ffpros operates - functions
+will start returning different output by default. Instead, always set it
+at the top of any required script.</p>
 </div>
 <div class="section level2">
 <h2 id="metadata">Metadata<a class="anchor" aria-label="anchor" href="#metadata"></a>
 </h2>
-<p>By default, ffpros functions return only the cleaned data, but it can be configured to return the page HTML as well as any additional metadata, in case you want to parse the page on your own.</p>
+<p>By default, ffpros functions return only the cleaned data, but it can
+be configured to return the page HTML as well as any additional
+metadata, in case you want to parse the page on your own.</p>
 <p>This can be set with either of the following two methods:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.include_metadata <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">## OR ##</span>
-<span class="fu"><a href="../reference/fp_set_metadata.html">fp_set_metadata</a></span><span class="op">(</span>include <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>This function, as with the sport option, changes how ffpros functions behave in a material way - so you <strong><em>should not</em></strong> set this option in your rprofile. Instead, always set it at the top of any required script.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.include_metadata <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">## OR ##</span></span>
+<span><span class="fu"><a href="../reference/fp_set_metadata.html">fp_set_metadata</a></span><span class="op">(</span>include <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>This function, as with the sport option, changes how ffpros functions
+behave in a material way - so you <strong><em>should not</em></strong>
+set this option in your rprofile. Instead, always set it at the top of
+any required script.</p>
 </div>
 <div class="section level2">
 <h2 id="user-agent">User Agent<a class="anchor" aria-label="anchor" href="#user-agent"></a>
 </h2>
-<p>ffpros will default to identifying itself to FantasyPros.com as <code>"ffpros R client package https://github.com/ffverse/ffpros"</code>. If you would like to pass a different user agent, you can configure this with either of the following two methods:</p>
+<p>ffpros will default to identifying itself to FantasyPros.com as
+<code>"ffpros R client package https://github.com/ffverse/ffpros"</code>.
+If you would like to pass a different user agent, you can configure this
+with either of the following two methods:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fp_set_useragent.html">fp_set_useragent</a></span><span class="op">(</span><span class="st">"my_user_agent"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.user_agent <span class="op">=</span> <span class="st">"my_user_agent"</span><span class="op">)</span></code></pre></div>
-<p>There’s no significant difference between either of these methods and you can set it in your rprofile if you wish.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fp_set_useragent.html">fp_set_useragent</a></span><span class="op">(</span><span class="st">"my_user_agent"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>ffpros.user_agent <span class="op">=</span> <span class="st">"my_user_agent"</span><span class="op">)</span></span></code></pre></div>
+<p>There’s no significant difference between either of these methods and
+you can set it in your rprofile if you wish.</p>
 </div>
   </div>
 
@@ -228,7 +253,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
