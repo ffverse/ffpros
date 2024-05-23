@@ -7,7 +7,9 @@
 <!-- [![CRAN status](https://img.shields.io/cran/v/ffpros?style=flat-square&logo=R&label=CRAN)](https://CRAN.R-project.org/package=ffpros)  -->
 
 [![Dev
-status](https://img.shields.io/github/r-package/v/dynastyprocess/ffpros/main?label=dev%20version&style=flat-square&logo=github)](https://ffpros.dynastyprocess.com/)
+status](https://img.shields.io/github/r-package/v/dynastyprocess/ffpros/main?label=dev%20version&style=flat-square&logo=github)](https://ffpros.ffverse.com/){.pkgdown-release}
+[![Dev
+status](https://img.shields.io/github/r-package/v/dynastyprocess/ffpros/main?label=dev%20version&style=flat-square&logo=github)](https://ffpros.ffverse.com/){.pkgdown-devel}
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html)
 [![R build
