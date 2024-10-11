@@ -80,6 +80,8 @@ fp_projections_parse.fp_nfl <- function(response){
     team = rvest::html_text(player_labels) %>% tail(-1)
   ) %>%
     dplyr::mutate(
+      #The 'highlow' string may appear in the 'team' text when max and min requested
+      team = stringr::str_remove(team, "highlow$"),
       team = purrr::map2(.data$player_name,
                          .data$team,
                          ~stringr::str_remove_all(.y,.x) %>%
