@@ -59,7 +59,6 @@ fp_projections_parse <- function(response) UseMethod("fp_projections_parse", res
 #'
 #' @keywords internal
 fp_projections_parse.fp_nfl <- function(response){
-
   table_html <- response$content %>%
     rvest::html_node("#data")
 
@@ -83,7 +82,7 @@ fp_projections_parse.fp_nfl <- function(response){
       team = purrr::map2(.data$player_name,
                          .data$team,
                          ~stringr::str_remove_all(.y,.x) %>%
-                           stringr::str_extract_all("[A-Z]+ ") %>%
+                           stringr::str_remove_all("[^A-Z]") %>%
                            stringr::str_squish()) %>% unlist()
     )
 
