@@ -132,20 +132,18 @@
 <a class="anchor" aria-label="anchor" href="#ffpros-"></a>
 </h1></div>
 <!-- badges: start -->
-<!-- [![CRAN status](https://img.shields.io/cran/v/ffpros?style=flat-square&logo=R&label=CRAN)](https://CRAN.R-project.org/package=ffpros)  -->
 
 <!-- badges: end -->
 <p>Helps scrape FantasyPros.com by handling rate-limiting/caching/parsing and returning tidy dataframes which can be easily connected to other data sources.</p>
-<p><em>Renamed from fpscrapr to ffpros on 2021-06-14 so that all ffverse packages start with ff</em></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install the stable version of this package from the <a href="https://ffverse.r-universe.dev" class="external-link">ffverse r-universe repository</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ffpros"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://ffverse.r-universe.dev"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># or via GitHub c/o remotes/devtools:</span></span>
-<span><span class="co"># install.packages('remotes')</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dynastyprocess/ffpros"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># or via GitHub c/o pak:</span></span>
+<span><span class="co"># install.packages('pak')</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"ffverse/ffpros"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -183,7 +181,7 @@
 <span><span class="co">#&gt; 4 16588          Leon Draisaitl  EDM   C,LW      4  10     7       3    17</span></span>
 <span><span class="co">#&gt; 5 15373          Patrick Kane    CHI   RW,F      5  12     1      11    13</span></span>
 <span><span class="co">#&gt; # ... with 415 more rows</span></span></code></pre></div>
-<p>Default configuration options are detailed in the <a href="https://ffpros.dynastyprocess.com/articles" class="external-link">configuration options vignette</a>.</p>
+<p>Default configuration options are detailed in the <a href="https://ffpros.ffverse.com/articles">configuration options vignette</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="support">Support<a class="anchor" aria-label="anchor" href="#support"></a>
@@ -191,7 +189,7 @@
 <p>The best places to get help on this package are:</p>
 <ul>
 <li>the <a href="https://discord.com/invite/5Er2FBnnQa" class="external-link">nflverse discord</a> (for both this package as well as anything R/NFL related)</li>
-<li>opening <a href="https://github.com/DynastyProcess/ffpros/issues/new/choose" class="external-link">an issue</a>
+<li>opening <a href="https://github.com/ffverse/ffpros/issues/new/choose" class="external-link">an issue</a>
 </li>
 </ul>
 </div>
@@ -200,15 +198,15 @@
 </h2>
 <p>Many hands make light work! Here are some ways you can contribute to this project:</p>
 <ul>
-<li><p>You can <a href="https://github.com/DynastyProcess/ffpros/issues/new/choose" class="external-link">open an issue</a> if you’d like to request specific data or report a bug/error.</p></li>
+<li><p>You can <a href="https://github.com/ffverse/ffpros/issues/new/choose" class="external-link">open an issue</a> if you’d like to request specific data or report a bug/error.</p></li>
 <li><p>You can <a href="https://github.com/sponsors/tanho63" class="external-link">sponsor this project with donations</a>!</p></li>
-<li><p>If you’d like to contribute code, please check out <a href="https://ffpros.dynastyprocess.com/CONTRIBUTING.html" class="external-link">the contribution guidelines</a>.</p></li>
+<li><p>If you’d like to contribute code, please check out <a href="https://ffpros.ffverse.com/CONTRIBUTING.html">the contribution guidelines</a>.</p></li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="terms-of-use">Terms of Use<a class="anchor" aria-label="anchor" href="#terms-of-use"></a>
 </h2>
-<p>The R code for this package is released as open source under the <a href="https://ffpros.dynastyprocess.com/LICENSE.html" class="external-link">MIT license</a>.</p>
+<p>The R code for this package is released as open source under the <a href="https://ffpros.ffverse.com/LICENSE.html">MIT license</a>.</p>
 <p>The data accessed by this package belongs to FantasyPros.com, and is governed by their terms of use.</p>
 </div>
 </div>
