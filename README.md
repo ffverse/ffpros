@@ -4,31 +4,17 @@
 # ffpros <a href='#'><img src="man/figures/logo.png" align="right" width="25%" min-width="120px"/></a>
 
 <!-- badges: start -->
-<!-- [![CRAN status](https://img.shields.io/cran/v/ffpros?style=flat-square&logo=R&label=CRAN)](https://CRAN.R-project.org/package=ffpros)  -->
-
-[![Dev
-status](https://img.shields.io/github/r-package/v/dynastyprocess/ffpros/main?label=dev%20version&style=flat-square&logo=github)](https://ffpros.ffverse.com/){.pkgdown-release}
-[![Dev
-status](https://img.shields.io/github/r-package/v/dynastyprocess/ffpros/main?label=dev%20version&style=flat-square&logo=github)](https://ffpros.ffverse.com/){.pkgdown-devel}
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html)
-[![R build
-status](https://img.shields.io/github/workflow/status/dynastyprocess/ffpros/R-CMD-check?label=R%20check&style=flat-square&logo=github)](https://github.com/DynastyProcess/ffpros/actions)
-[![Live test
-status](https://img.shields.io/github/workflow/status/dynastyprocess/ffpros/TestLiveSite?label=Live%20check&style=flat-square&logo=github)](https://github.com/DynastyProcess/ffpros/actions)
-[![Codecov test
-coverage](https://img.shields.io/codecov/c/github/dynastyprocess/ffpros?label=codecov&style=flat-square&logo=codecov)](https://codecov.io/gh/DynastyProcess/ffpros?branch=main)
-[![nflverse
-discord](htthttps://img.shields.io/discord/789805604076126219?color=7289da&label=nflverse%20discord&logo=discord&logoColor=fff&style=flat-square)](https://discord.com/invite/5Er2FBnnQa)
+[![Dev status](https://img.shields.io/github/r-package/v/ffverse/ffpros/main?label=dev%20version&style=flat-square&logo=github)](https://ffpros.ffverse.com/)
+[![Codecov test coverage](https://img.shields.io/codecov/c/github/ffverse/ffpros?label=codecov&style=flat-square&logo=codecov)](https://app.codecov.io/gh/ffverse/ffpros?branch=main)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg?style=flat-square)](https://lifecycle.r-lib.org/articles/stages.html)
+[![R build status](https://img.shields.io/github/actions/workflow/status/ffverse/ffpros/R-CMD-check.yaml?label=R%20check&style=flat-square&logo=github)](https://github.com/ffverse/ffpros/actions)
+[![nflverse discord](https://img.shields.io/discord/789805604076126219?color=7289da&label=nflverse%20discord&logo=discord&logoColor=fff&style=flat-square)](https://discord.com/invite/5Er2FBnnQa)
 
 <!-- badges: end -->
 
 Helps scrape FantasyPros.com by handling rate-limiting/caching/parsing
 and returning tidy dataframes which can be easily connected to other
 data sources.
-
-*Renamed from fpscrapr to ffpros on 2021-06-14 so that all ffverse
-packages start with ff*
 
 ## Installation
 
@@ -37,9 +23,9 @@ repository](https://ffverse.r-universe.dev):
 
 ``` r
 install.packages("ffpros", repos = c("https://ffverse.r-universe.dev", getOption("repos")))
-# or via GitHub c/o remotes/devtools:
-# install.packages('remotes')
-remotes::install_github("dynastyprocess/ffpros")
+# or via GitHub c/o pak:
+# install.packages('pak')
+pak::pkg_install("ffverse/ffpros")
 ```
 
 ## Usage
@@ -82,7 +68,7 @@ fp_rankings(page = "ros-overall", sport = "nhl")
 ```
 
 Default configuration options are detailed in the [configuration options
-vignette](https://ffpros.dynastyprocess.com/articles).
+vignette](https://ffpros.ffverse.com/articles).
 
 ## Support
 
@@ -91,7 +77,7 @@ The best places to get help on this package are:
 -   the [nflverse discord](https://discord.com/invite/5Er2FBnnQa) (for
     both this package as well as anything R/NFL related)
 -   opening [an
-    issue](https://github.com/DynastyProcess/ffpros/issues/new/choose)
+    issue](https://github.com/ffverse/ffpros/issues/new/choose)
 
 ## Contributing
 
@@ -99,19 +85,19 @@ Many hands make light work! Here are some ways you can contribute to
 this project:
 
 -   You can [open an
-    issue](https://github.com/DynastyProcess/ffpros/issues/new/choose)
+    issue](https://github.com/ffverse/ffpros/issues/new/choose)
     if you’d like to request specific data or report a bug/error.
 
 -   You can [sponsor this project with
     donations](https://github.com/sponsors/tanho63)!
 
 -   If you’d like to contribute code, please check out [the contribution
-    guidelines](https://ffpros.dynastyprocess.com/CONTRIBUTING.html).
+    guidelines](https://ffpros.ffverse.com/CONTRIBUTING.html).
 
 ## Terms of Use
 
 The R code for this package is released as open source under the [MIT
-license](https://ffpros.dynastyprocess.com/LICENSE.html).
+license](https://ffpros.ffverse.com/LICENSE.html).
 
 The data accessed by this package belongs to FantasyPros.com, and is
 governed by their terms of use.
